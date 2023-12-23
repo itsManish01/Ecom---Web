@@ -1,7 +1,7 @@
 const Product = require('../models/productModel')
 const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../utils/catchAsyncError');
-
+const catchAsyncErrors = require('../Middlewares/catchAsyncError');
+const ApiFeatures = require('../utils/ApiFeatures');
 //create a new product
 exports.createProduct = catchAsyncErrors(async (req,res)=>{
     const product = await Product.create(req.body);
@@ -12,11 +12,12 @@ exports.createProduct = catchAsyncErrors(async (req,res)=>{
 })
 //access all products
 exports.getAllProducts= catchAsyncErrors(async (req,res)=>{
-    
-    const data = await Product.find();
+    const apiFeatures = new ApiFeatures(Product.find(),req.query).search();
+
+    const products = await apiFeatures.query;
     res.status(200).json({
         sucess : true,
-        data,
+        products,
     });
 })
 
@@ -28,7 +29,7 @@ exports.updateProduct = catchAsyncErrors( async(req,res)=>{
     //         sucess : false,
     //         message : "product not found"
     //     })
-    // }
+    // } 
     
     if(!product){
         return next(new ErrorHandler("Product not found",404))
