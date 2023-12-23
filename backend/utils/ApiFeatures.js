@@ -30,6 +30,14 @@ class ApiFeatures {
         return this;
 
     }
+
+    pagination(resultsPerPage){
+        const currentPage = Number(this.queryObject.page) || 1;
+        const skip = resultsPerPage * (currentPage-1);
+
+        this.query = this.query.skip(skip).limit(resultsPerPage); //to skip first and then limit
+        return this;
+    }
 }
 
 module.exports = ApiFeatures;
