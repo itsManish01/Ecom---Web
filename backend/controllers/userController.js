@@ -117,3 +117,45 @@ exports.resetPassword = catchAsyncErrors(async(req,res,next)=>{
 
     sendToken(user,200,res);
 })
+
+//get user profile
+exports.getUserDetails = catchAsyncErrors(async(req,res,next)=>{
+    const user  = await User.findById(req.user._id);
+    res.status(200).json({
+        success : true,
+        user,
+    })
+})
+
+//update password
+exports.updatePassword = catchAsyncErrors(async(req,res,next)=>{
+    const user  = await User.findById(req.user._id).select("+password");
+    const isPasswordMatched = await user.comparePassword(req.body.oldPassword);
+    if(!isPasswordMatched){
+        return next(new ErrorHandler("Old password is incorrect",400));
+    }
+    if(req.body.newPassword !== req.body.confirmPassword){
+        return next(new ErrorHandler("Pasword does'nt match",400));
+    }
+    user.password = req.body.newPassword;
+    await user.save();
+    sendToken(user,200,res);
+})
+//update profile user
+exports.updateProfile = catchAsyncErrors( async(req,res,next)=>{
+    const newData = {
+        email : req.body.email,
+        name : req.body.name,
+    }
+
+    //img update to be added {cloudiary}
+
+    const user = await User.findByIdAndUpdate(req.user.id,newData,{
+        new : true,
+        runValidators : true,
+    })
+    res.status(200).json({
+        success : true,
+        message : "Profile Updated"
+    })
+})
