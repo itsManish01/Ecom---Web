@@ -4,9 +4,10 @@ const catchAsyncErrors = require("../Middlewares/catchAsyncError");
 const ApiFeatures = require("../utils/ApiFeatures");
 //create a new product
 exports.createProduct = catchAsyncErrors(async (req, res) => {
+  req.body.user = req.user._id;
   const product = await Product.create(req.body);
   res.status(201).json({
-    sucess: true,
+    success: true,
     product,
   });
 });
@@ -21,7 +22,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
 
   const products = await apiFeatures.query;
   res.status(200).json({
-    sucess: true,
+    success: true,
     products,
     productCount
   });
@@ -48,7 +49,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
   });
 
   res.status(200).json({
-    sucess: true,
+    success: true,
     message: "Product Updated",
     product,
   });
@@ -60,7 +61,7 @@ exports.getProductDetails = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Product not found", 404));
   }
   res.status(200).json({
-    sucess: true,
+    success: true,
     product,
   });
 });
@@ -74,7 +75,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res) => {
 
   await Product.findByIdAndDelete(req.params.id);
   res.status(200).json({
-    sucess: true,
+    success: true,
     message: "product Deleted",
   });
 });

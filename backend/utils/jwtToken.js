@@ -10,7 +10,7 @@ const sendToken = (user,stautsCode,res) => {
         httpOnly : true
     }
     res.status(stautsCode).cookie('token',token,options).json( {
-        sucess: true,
+        success: true,
         token,
         user,
     })
