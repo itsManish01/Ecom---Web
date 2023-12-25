@@ -8,6 +8,10 @@ const {
   getUserDetails,
   updatePassword,
   updateProfile,
+  getAllUsers,
+  getSingleUser,
+  updateUserRole,
+  deleteUser,
 } = require("../controllers/userController");
 const router = express.Router();
 const { isAuthenticated, authorizeRoles } = require("../Middlewares/auth");
@@ -20,5 +24,14 @@ router.route("/logout").get(logoutUser);
 router.route("/me").get(isAuthenticated, getUserDetails);
 router.route("/password/update").put(isAuthenticated, updatePassword);
 router.route("/me/update").put(isAuthenticated, updateProfile);
+
+router
+  .route("/admin/users")
+  .get(isAuthenticated, authorizeRoles("admin"), getAllUsers);
+router
+  .route("/admin/user/:id")
+  .get(isAuthenticated, authorizeRoles("admin"), getSingleUser)
+  .put(isAuthenticated, authorizeRoles("admin"), updateUserRole)
+  .delete(isAuthenticated, authorizeRoles("admin"), deleteUser);
 
 module.exports = router;

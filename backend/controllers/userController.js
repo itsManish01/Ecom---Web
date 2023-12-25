@@ -53,7 +53,7 @@ exports.logoutUser = async(req,res,next)=>{
 
     res.status(200).json({
         success: true,
-        message : "logged Out"
+        message : "Logged Out"
     })
 
 }
@@ -150,12 +150,72 @@ exports.updateProfile = catchAsyncErrors( async(req,res,next)=>{
 
     //img update to be added {cloudiary}
 
-    const user = await User.findByIdAndUpdate(req.user.id,newData,{
+    const user = await User.findByIdAndUpdate(req.user._id,newData,{
         new : true,
         runValidators : true,
     })
+    
     res.status(200).json({
         success : true,
+        user,
         message : "Profile Updated"
+    })
+})
+
+//get all users -> admin
+exports.getAllUsers= catchAsyncErrors( async(req,res,next)=>{
+    const users = await User.find();
+    res.status(200).json({
+        success : true ,
+        users
+    })
+})
+//get user detail-> admin
+exports.getSingleUser= catchAsyncErrors( async(req,res,next)=>{
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User not found with id: ${req.params.id}`,400));
+    }
+    res.status(200).json({
+        success : true ,
+        user
+    })
+})
+
+//update user role -admin
+exports.updateUserRole = catchAsyncErrors( async(req,res,next)=>{
+    const newData = {
+        email : req.body.email,
+        name : req.body.name,
+        role : req.body.role
+    }
+
+    const user = await User.findByIdAndUpdate(req.params.id,newData,{
+        new : true,
+        runValidators : true,
+    })
+    
+    res.status(200).json({
+        success : true,
+        user,
+        message : "Role Updated Successfully"
+    })
+})
+//delete user  -admin
+exports.deleteUser = catchAsyncErrors( async(req,res,next)=>{
+
+    //img update to be deleted {cloudiary}
+
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler(`User not found! , id : ${req.params.id}`,400))
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+    
+    res.status(200).json({
+        success : true,
+        user,
+        message : "User deleted Successfully"
     })
 })
