@@ -119,11 +119,54 @@ exports.createProductReview = catchAsyncErrors(async(req,res,next)=>{
 
   //save the product
   await product.save({
-    validateBeforeSave : false,
+    validateBeforeSave : false 
   });
 
   res.status(200).json({
       success : true,
       message : "review added"
   })
+})
+
+//get all reviews of a product
+exports.getAllReviews = catchAsyncErrors(async(req,res,next)=>{
+  const product = await Product.findById(req.query.productID);
+  if(!product){
+    return next(new ErrorHandler("Product not found"),400);
+  }
+  res.status(200).json({
+    success : true,
+    reviews : product.reviews,
+  })
+})
+
+//delete a review
+exports.deleteReview = catchAsyncErrors(async(req,res,next)=>{
+  const product = await Product.findById(req.query.productID);
+  if(!product){
+    return next(new ErrorHandler("Product not found"),400);
+  }
+  const reviews = product.reviews.filter( (item)=>{
+    return item.user.toString() !== req.user._id.toString();
+  })
+  //update the net rating
+  let sum= 0;
+  for(let i =0;i<reviews.length ;i++){
+    sum += reviews[i].rating;
+  }
+  if(reviews.length===0){
+    product.rating = 0;
+  }else{
+    product.rating = sum/(reviews.length);
+  }
+  product.numOfReviews = reviews.length;
+  product.reviews = reviews;
+
+  await product.save();
+  res.status(200).json({
+    success : true,
+    message : "Review deleted Successfully"
+  })
+
+
 })
