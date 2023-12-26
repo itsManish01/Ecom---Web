@@ -3,15 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-tailwind/react": "^2.1.8",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.2",
-    "overlay-navbar": "^1.2.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
+    "react-js-pagination": "^3.0.3",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.0.4",
     "react-router-dom": "^6.21.1",
@@ -48,5 +49,5 @@
   "devDependencies": {
     "tailwindcss": "^3.4.0"
   },
-  "proxy": "http://192.168.140.163:4000"
+  "proxy": "http://localhost:4000"
 }

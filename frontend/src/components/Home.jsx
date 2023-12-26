@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import homePng from "./images/home.png";
-import Product from "./Product.jsx";
+import ProductCard from "./ProductCard.jsx";
 import { HashLink } from "react-router-hash-link";
 import MetaData from "./MetaData.js";
-import { getProduct } from "../actions/productActions.js";
+import { getProduct, clearErrors } from "../actions/productActions.js";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading.jsx";
 
@@ -17,8 +17,9 @@ export default function Home() {
     dispatch(getProduct());
     if (error) {
       toast.error(error, { theme: "dark" });
+      dispatch(clearErrors());
     }
-  }, [dispatch]);
+  }, [dispatch,error]);
 
   return (
     <>
@@ -63,7 +64,7 @@ export default function Home() {
                 <>
                   {products &&
                     products.map((item) => {
-                      return <Product product={item} />;
+                      return <ProductCard product={item} />;
                     })}
                 </>
               )}

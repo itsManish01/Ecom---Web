@@ -1,0 +1,20 @@
+.pagination {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2rem;
+    gap: 0.5rem;
+}
+.page-item{
+    background-color: rgb(234 179 8);
+    padding: 0.5rem;
+    border-radius: 10%;
+}
+.pageItemActive{
+    background-color: whitesmoke;
+}
+.disabled{
+    background-color: rgb(120 113 108);
+}
+.page-item:hover{
+    transform: scale(1.1);
+}

@@ -13,15 +13,15 @@ export default function Header() {
           </Link>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-white" href="/#">Home</a>
-          <a className="mr-5 hover:text-white" href="/#" >Product</a>
+          <a className="mr-5 hover:text-white" href="/">Home</a>
+          <a className="mr-5 hover:text-white" href="/products" >Products</a>
           <a className="mr-5 hover:text-white" href="/#">Contact</a>
           <a className="mr-5 hover:text-white" href="/#">About</a>
         </nav>
         <div className="flex gap-2 mx-2 text-xl">
-          <a href="/#">
+          <Link to="/search">
             <i className="fa-solid fa-magnifying-glass hover:text-white"></i>
-          </a>
+          </Link>
           <a href="/#">
             {" "}
             <i className="fa-solid fa-cart-shopping hover:text-white"></i>
