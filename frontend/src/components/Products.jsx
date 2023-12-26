@@ -52,6 +52,10 @@ export default function Products() {
           </div>
         </div>
       </section>
+
+      <div className="filter">
+
+      </div>
       
       <section className="flex flex-row justify-center py-4">
             <Pagination

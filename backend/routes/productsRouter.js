@@ -9,7 +9,7 @@ router.route('/admin/products/new').post(isAuthenticated,authorizeRoles("admin")
 router.route('/admin/products/:id').put(isAuthenticated,authorizeRoles("admin"),updateProduct)
                              .delete(isAuthenticated,authorizeRoles("admin"),deleteProduct);
                              
-router.route('/products/:id').get(getProductDetails);
+router.route('/product/:id').get(getProductDetails);
 router.route('/review').put(isAuthenticated,createProductReview).delete(isAuthenticated,deleteReview);
 router.route('/reviews').get(getAllReviews);
 
