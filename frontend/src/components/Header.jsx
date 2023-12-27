@@ -1,16 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {logout} from "../actions/userActions"
+import { logout } from "../actions/userActions";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Header() {
   const { isAuth, user } = useSelector((store) => store.user);
   const dispatch = useDispatch();
-  const navigate=useNavigate();
-  const logoutHandler =()=>{
-    dispatch(logout);
-    navigate("/api/v1/")
-  }
+  const navigate = useNavigate();
+  const logoutHandler = () => {
+    dispatch(logout());
+    toast.success("Logged Out Successfully",{theme:"dark"})
+    navigate("/");
+  };
   return (
     <header className="text-gray-400 bg-gray-900 body-font">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
@@ -20,7 +24,7 @@ export default function Header() {
         >
           <Link to="/">
             <span className="ml-3  text-yellow-500 text-3xl">
-              Ecom <i class="fa-solid fa-truck-fast"></i>
+              Ecom <i className ="fa-solid fa-truck-fast"></i>
             </span>
           </Link>
         </a>
@@ -40,31 +44,48 @@ export default function Header() {
         </nav>
         <div className="flex gap-5 mx-2 text-xl">
           <Link to="/search">
-            <i title="search" className="fa-solid fa-magnifying-glass hover:text-white"></i>
+            <i
+              title="search"
+              className="fa-solid fa-magnifying-glass hover:text-white"
+            ></i>
           </Link>
           <a href="/#">
             {" "}
-            <i title="cart" className="fa-solid fa-cart-shopping hover:text-white"></i>
+            <i
+              title="cart"
+              className="fa-solid fa-cart-shopping hover:text-white"
+            ></i>
           </a>
           {isAuth && user ? (
             <div className="flex flex-row gap-3">
               <Link to="/account">
-                <img src={user.avatar.url} alt="profile"
-                title ="account"
-                class="w-8 h-8 object-cover object-center rounded-full inline-block border-2 border-gray-800 bg-gray-800 bg-opacity-10"
+                <img
+                  src={user.avatar.url}
+                  alt="profile"
+                  title="account"
+                  className="hover:border-yellow-500 w-8 h-8 object-cover object-center rounded-full inline-block border-2 border-gray-800 bg-gray-800 bg-opacity-10"
                 />
+                </Link>
+                {isAuth && user.role==="admin" && (
+                <Link to="/dashboard" title="DashBoard">
+                <i className ="fa-solid fa-chart-simple hover:text-pink-600"></i>
+                </Link>
+                )}
+              <Link to="/orders/me" title="orders">
+                <i className ="fa-solid fa-truck  hover:text-yellow-500"></i>
               </Link>
               <button title="logout" onClick={logoutHandler}>
-                <i  class="fas fa-sign-out  hover:text-white"></i>
+                <i className ="fas fa-sign-out  hover:text-red-700"></i>
               </button>
             </div>
           ) : (
             <Link to="/signin">
-              <i class="fa-solid fa-user  hover:text-white"></i>
+              <i className ="fa-solid fa-user  hover:text-white"></i>
             </Link>
           )}
         </div>
       </div>
+      <ToastContainer/>
     </header>
   );
 }

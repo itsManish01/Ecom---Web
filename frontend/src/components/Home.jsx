@@ -38,7 +38,7 @@ export default function Home() {
               Welcome to
               <span className="text-yellow-500">
                 {" "}
-                Ecom <i class="fa-solid fa-truck-fast"></i>{" "}
+                Ecom <i className ="fa-solid fa-truck-fast"></i>{" "}
               </span>
             </h1>
             <p className="mb-8 leading-relaxed text-lg">
@@ -64,7 +64,7 @@ export default function Home() {
                 <>
                   {products &&
                     products.map((item) => {
-                      return <ProductCard product={item} />;
+                      return <ProductCard key={item._id} product={item} />;
                     })}
                 </>
               )}

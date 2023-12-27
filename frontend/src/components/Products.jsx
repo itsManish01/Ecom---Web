@@ -45,17 +45,17 @@ export default function Products() {
   return (
     <>
     <MetaData title ={"Ecom - Products"} />
-      <div class="container px-5 py-4 mx-auto">
-        <h1 class="text-3xl font-medium title-font text-white  text-center">
+      <div className ="container px-5 py-4 mx-auto">
+        <h1 className ="text-3xl font-medium title-font text-white  text-center">
           Products
         </h1>
       </div>
-      <section class="text-gray-400 bg-gray-900 body-font  mb-4 ">
-        <div class="bg-gray-800 bg-opacity-50  py-2 px-8 flex flex-col items-center w-full ">
-          <h2 class="text-white text-lg font-medium title-font  ">Filter</h2>
+      <section className ="text-gray-400 bg-gray-900 body-font  mb-4 ">
+        <div className ="bg-gray-800 bg-opacity-50  py-2 px-8 flex flex-col items-center w-full ">
+          <h2 className ="text-white text-lg font-medium title-font  ">Filter</h2>
           <div className="w-full flex flex-col md:flex-row justify-evenly ">
-            <div class="relative mb-8">
-              <p class="leading-7 text-sm text-gray-400">Price Range</p>
+            <div className ="relative mb-8">
+              <p className ="leading-7 text-sm text-gray-400">Price Range</p>
               <input
                 type="text"
                 onChange={(e) => {
@@ -66,7 +66,7 @@ export default function Products() {
                   }
                 }}
                 placeholder="From"
-                class="w-2/5 mx-1 bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                className ="w-2/5 mx-1 bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
               to
               <input
@@ -79,11 +79,11 @@ export default function Products() {
                   }
                 }}
                 placeholder="Upto"
-                class="w-2/5 mx-1 bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                className ="w-2/5 mx-1 bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <div class="relative mb-8">
-              <label for="email" class="leading-7 text-sm text-gray-400">
+            <div className ="relative mb-8">
+              <label for="email" className ="leading-7 text-sm text-gray-400">
                 Category
               </label>
 
@@ -91,7 +91,7 @@ export default function Products() {
                 onChange={(e) => {
                   setCategory(e.target.value);
                 }}
-                class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-2 px-2 leading-8 transition-colors duration-200 ease-in-out"
+                className ="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-2 px-2 leading-8 transition-colors duration-200 ease-in-out"
                 name="category"
               >
                 {categories.map((item) => {
@@ -103,8 +103,8 @@ export default function Products() {
                 })}
               </select>
             </div>
-            <div class="relative mb-8">
-              <label for="steps-range" class="leading-7 text-sm text-gray-400">
+            <div className ="relative mb-8">
+              <label for="steps-range" className ="leading-7 text-sm text-gray-400">
                 Rating Above : {ratingAbove}
               </label>
               <input
@@ -116,7 +116,7 @@ export default function Products() {
                     setRatingAbove(e.target.value);
                 }}
                 step="0.5"
-                class=" w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                className =" w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
               />
             </div>
           </div>

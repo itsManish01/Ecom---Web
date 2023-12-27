@@ -80,7 +80,7 @@ export default function ProductDetails() {
                     className="mx-2 px-2 py-1 bg-yellow-500 text-white rounded-2xl"
                     onClick={copyToClipBoard}
                   >
-                    <i class="fas fa-share"></i>
+                    <i className ="fas fa-share"></i>
                   </button>
                 </p>
                 <div className="flex mb-4">
@@ -137,15 +137,15 @@ export default function ProductDetails() {
         )}
       </section>
     
-    <section class="text-gray-400 bg-gray-900 body-font">
-        <div class="container px-5 py-8 mx-auto">
-          <h1 class="text-3xl font-medium title-font text-white mb-12 text-center">
+    <section className ="text-gray-400 bg-gray-900 body-font">
+        <div className ="container px-5 py-8 mx-auto">
+          <h1 className ="text-3xl font-medium title-font text-white mb-12 text-center">
             Reviews
           </h1>
 
           {product.reviews && product.reviews[0] ? (
             <>
-              <div class="flex flex-wrap flex-row -m-4 overflow-x-auto">
+              <div className ="flex flex-wrap flex-row -m-4 overflow-x-auto">
                 {product.reviews &&
                   product.reviews.map((item) => {
                     return <ReviewCard review={item} />;
@@ -153,7 +153,7 @@ export default function ProductDetails() {
               </div>
             </>
           ) : (
-            <h1 class="text-xl font-medium title-font text-white mb-12 text-center">
+            <h1 className ="text-xl font-medium title-font text-white mb-12 text-center">
               No Reviews Yet ..!!
             </h1>
           )}

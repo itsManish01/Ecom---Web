@@ -9,11 +9,15 @@ import {
   USER_LOAD_SUCCESS,
   USER_LOAD_REQUEST,
   CLEAR_ALL_ERRORS,
+  USER_LOGOUT_FAIL,
+  USER_LOGOUT_SUCESS,
 } from "../constants/userConstants";
 
 const initialState = {
   user: {},
   isAuth: false,
+  loading : false,
+  error :null,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -41,8 +45,20 @@ export const userReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
         isAuth: false,
-        user: {},
+        user: null,
       };
+    case USER_LOGOUT_SUCESS :
+      return {
+        loading :false,
+        user : null,
+        isAuth : false
+      }
+    case USER_LOGOUT_FAIL:{
+      return {
+        ...state,
+        error : action.payload
+      }
+    }
     case CLEAR_ALL_ERRORS:
       return {
         ...state,

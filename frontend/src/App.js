@@ -10,14 +10,14 @@ import Signin from "./components/Signin.jsx"
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./actions/userActions.js";
-
+import Profile from "./components/Profile.jsx"
 
 function App() {
 
   const dispatch = useDispatch();
   useEffect(()=>{
-    dispatch(loadUser())
-  },[])
+    dispatch(loadUser());
+  },[dispatch])
   return (
     <Router >
       <Header />
@@ -28,6 +28,7 @@ function App() {
           <Route path="/products/:keyword" element={<Products />} />
           <Route path="/search" element={<Search />} />
           <Route path="/signin" element={<Signin/>}  />
+          <Route path="/account" element={<Profile/>}  />
         </Routes>
       <Footer />
     </Router>
