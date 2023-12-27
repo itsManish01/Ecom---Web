@@ -8,17 +8,27 @@ import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
 import "./CSS/pagination.css";
+import MetaData from "./MetaData";
 
-const categories = ["All","Mobiles", "Footwear", "Electronics", "Kitchen", "BodyProducts", "Medical","Styling"];
+const categories = [
+  "All",
+  "Mobiles",
+  "Footwear",
+  "Electronics",
+  "Kitchen",
+  "BodyProducts",
+  "Medical",
+  "Styling",
+];
 
 export default function Products() {
   const { loading, products, error, productsCount } = useSelector(
     (store) => store.products
   );
-
+  const [ratingAbove, setRatingAbove]  = useState(0);
   const [priceL, setPriceL] = useState(0);
   const [priceR, setPriceR] = useState(500000);
-  const [category ,setCategory] = useState("All");
+  const [category, setCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const { keyword } = useParams();
   const setCurrentPageNo = (e) => {
@@ -26,14 +36,15 @@ export default function Products() {
   };
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getProduct(keyword, currentPage, [priceL, priceR], category));
+    dispatch(getProduct(keyword, currentPage, [priceL, priceR], category,ratingAbove));
     if (error) {
       toast.error(error, { theme: "dark" });
     }
-  }, [dispatch, keyword, currentPage, priceR, priceL, error ,category]);
+  }, [dispatch, keyword, currentPage, priceR, priceL, error, category ,ratingAbove]);
 
   return (
     <>
+    <MetaData title ={"Ecom - Products"} />
       <div class="container px-5 py-4 mx-auto">
         <h1 class="text-3xl font-medium title-font text-white  text-center">
           Products
@@ -43,7 +54,7 @@ export default function Products() {
         <div class="bg-gray-800 bg-opacity-50  py-2 px-8 flex flex-col items-center w-full ">
           <h2 class="text-white text-lg font-medium title-font  ">Filter</h2>
           <div className="w-full flex flex-col md:flex-row justify-evenly ">
-            <div class="relative mb-4">
+            <div class="relative mb-8">
               <p class="leading-7 text-sm text-gray-400">Price Range</p>
               <input
                 type="text"
@@ -71,45 +82,41 @@ export default function Products() {
                 class="w-2/5 mx-1 bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
-            <div class="relative mb-4">
+            <div class="relative mb-8">
               <label for="email" class="leading-7 text-sm text-gray-400">
                 Category
               </label>
 
               <select
-              onChange={(e)=>{
-                setCategory(e.target.value);
-              }}
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
                 class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-2 px-2 leading-8 transition-colors duration-200 ease-in-out"
                 name="category"
               >
-                {categories.map((item)=>{
-                    return (
-                        <option className="bg-gray-700 my-2" value={item}>{item}</option>
-                    )
+                {categories.map((item) => {
+                  return (
+                    <option className="bg-gray-700 my-2" value={item}>
+                      {item}
+                    </option>
+                  );
                 })}
               </select>
             </div>
-            <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-400">
-                Email
+            <div class="relative mb-8">
+              <label for="steps-range" class="leading-7 text-sm text-gray-400">
+                Rating Above : {ratingAbove}
               </label>
               <input
-                type="email"
-                id="email"
-                name="email"
-                class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-              />
-            </div>
-            <div class="relative mb-4">
-              <label for="email" class="leading-7 text-sm text-gray-400">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="w-full bg-gray-600 bg-opacity-20 focus:bg-transparent focus:ring-2 focus:ring-yellow-900 rounded border border-gray-600 focus:border-yellow-500 text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                id="labels-range-input"
+                type="range"
+                min="0"
+                max="5"
+                onChange={(e)=>{
+                    setRatingAbove(e.target.value);
+                }}
+                step="0.5"
+                class=" w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
               />
             </div>
           </div>

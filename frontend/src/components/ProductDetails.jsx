@@ -8,6 +8,7 @@ import ReviewCard from "./ReviewCard";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import MetaData from "./MetaData";
 
 export default function ProductDetails() {
   const dispatch = useDispatch();
@@ -50,7 +51,9 @@ export default function ProductDetails() {
       <section className="text-gray-400 bg-gray-900 body-font flex justify-centeroverflow-hidden">
         {loading && !product ? (
           <Loading />
-        ) : (
+          ) : (
+            <>
+            <MetaData title={`Ecom - ${product.name}`} />
           <div className="container px-5 py-24 mx-auto">
             <div className="lg:w-4/5 mx-auto flex flex-wrap">
               {/* Carousel to be added */}
@@ -98,14 +101,14 @@ export default function ProductDetails() {
                       <p className="text-green-600 font-semibold"> InStock</p>
                     ) : (
                       <p className="text-red-700 font-semibold">OutOfStock</p>
-                    )}
+                      )}
                   </div>
 
                   <div className="flex ml-6 items-center">
                     <button
                       onClick={increase}
                       className="p-2 font-bold  bg-gray-500 rounded-l-xl "
-                    >
+                      >
                       +
                     </button>
                     <p className="bg-white p-2 px-3 text-black">{cnt}</p>
@@ -130,11 +133,11 @@ export default function ProductDetails() {
                 </button>
               </div>
             </div>
-          </div>
+          </div> </>
         )}
       </section>
     
-      <section class="text-gray-400 bg-gray-900 body-font">
+    <section class="text-gray-400 bg-gray-900 body-font">
         <div class="container px-5 py-8 mx-auto">
           <h1 class="text-3xl font-medium title-font text-white mb-12 text-center">
             Reviews
@@ -158,5 +161,5 @@ export default function ProductDetails() {
       </section>
       <ToastContainer />
     </>
-  );
+    );
 }

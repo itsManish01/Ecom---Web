@@ -6,6 +6,7 @@ import Home from "./components/Home.jsx";
 import ProductDetails from "./components/ProductDetails.jsx";
 import Products from "./components/Products.jsx";
 import Search from "./components/Search.jsx";
+import Signin from "./components/Signin.jsx"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/products" element={<Products />} />
           <Route path="/products/:keyword" element={<Products />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/signin" element={<Signin/>}  />
         </Routes>
       <Footer />
     </Router>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import MetaData from "./MetaData";
 export default function Search({history}) {
     const [keyword,setKeyword] = useState("");
     const navigate = useNavigate();
@@ -14,6 +14,8 @@ export default function Search({history}) {
         }
     }
   return (
+    <>
+    <MetaData title ={"Ecom - Search"} />
     <section class="text-gray-400 bg-gray-900 body-font py-32 sm:py-40 md:py-48 ">
       <div class="container px-5 mx-auto">
         <div class="flex flex-col text-center w-full mb-12">
@@ -39,5 +41,6 @@ export default function Search({history}) {
         </div>
       </div>
     </section>
+    </>
   );
 }

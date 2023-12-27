@@ -14,11 +14,11 @@ export default function Home() {
   const dispatch = useDispatch();
   const { loading,error, products } = useSelector((store) => store.products);
   useEffect(() => {
-    dispatch(getProduct());
     if (error) {
       toast.error(error, { theme: "dark" });
       dispatch(clearErrors());
     }
+    dispatch(getProduct());
   }, [dispatch,error]);
 
   return (

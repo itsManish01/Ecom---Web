@@ -18,7 +18,7 @@ export default function Header() {
           <a className="mr-5 hover:text-white" href="/#">Contact</a>
           <a className="mr-5 hover:text-white" href="/#">About</a>
         </nav>
-        <div className="flex gap-2 mx-2 text-xl">
+        <div className="flex gap-5 mx-2 text-xl">
           <Link to="/search">
             <i className="fa-solid fa-magnifying-glass hover:text-white"></i>
           </Link>
@@ -26,14 +26,9 @@ export default function Header() {
             {" "}
             <i className="fa-solid fa-cart-shopping hover:text-white"></i>
           </a>
-        </div>
-        <div className="flex gap-2 font-semibold">
-          <button className="inline-flex items-center bg-yellow-500 border-0 py-1 px-3 focus:outline-none hover:bg-gray-800 rounded text-white text-base mt-4 md:mt-0">
-            Sign Up
-          </button>
-          <button className="inline-flex items-center bg-yellow-500 border-0 py-1 px-3 focus:outline-none hover:bg-gray-800 rounded  text-white text-base mt-4 md:mt-0">
-            Login
-          </button>
+          <Link to="/signin">
+          <i class="fa-solid fa-user  hover:text-white"></i>
+          </Link>
         </div>
       </div>
     </header>
