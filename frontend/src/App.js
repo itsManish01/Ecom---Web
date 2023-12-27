@@ -7,8 +7,17 @@ import ProductDetails from "./components/ProductDetails.jsx";
 import Products from "./components/Products.jsx";
 import Search from "./components/Search.jsx";
 import Signin from "./components/Signin.jsx"
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./actions/userActions.js";
+
 
 function App() {
+
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(loadUser())
+  },[])
   return (
     <Router >
       <Header />
