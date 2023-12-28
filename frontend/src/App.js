@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { loadUser } from "./actions/userActions.js";
 import Profile from "./components/Profile.jsx"
+import ForgotPassword from "./components/ForgotPassword.jsx";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/signin" element={<Signin/>}  />
           <Route path="/account" element={<Profile/>}  />
+          <Route path="/password/reset/:token" element={<ForgotPassword/>}/>
         </Routes>
       <Footer />
     </Router>

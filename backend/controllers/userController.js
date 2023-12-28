@@ -69,15 +69,15 @@ exports.forgotPassword = catchAsyncErrors(async(req,res,next)=>{
     // console.log(req.body);
     const user = await User.findOne({email : req.body.email});
     if(!user){
-        return next(new ErrorHandler("User not found",401));
+        return next(new ErrorHandler("User not found or incorrect email",401));
     }
     //get the token
     const resetPasswordToken = user.getResetPasswordToken();
 
     await user.save({validateBeforeSave : false});
     
-    const resetPasswordURL = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetPasswordToken}`;
-    const message = `Your password reset token is :- \n\n ${resetPasswordURL} 
+    const resetPasswordURL = `http://localhost:3000/password/reset/${resetPasswordToken}`;
+    const message = `Your password reset token is :-\n\n ${resetPasswordURL} 
     \n\nIf you didn't requested this email, then please ignore it`;
     
     try {
