@@ -38,7 +38,7 @@ export default function Products() {
   useEffect(() => {
     dispatch(getProduct(keyword, currentPage, [priceL, priceR], category,ratingAbove));
     if (error) {
-      toast.error(error, { theme: "dark" });
+      toast.error(error, { theme: "dark", position:"bottom-right" });
     }
   }, [dispatch, keyword, currentPage, priceR, priceL, error, category ,ratingAbove]);
 

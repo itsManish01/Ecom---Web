@@ -16,7 +16,7 @@ export default function UpdateProfile() {
   const updateHandler = async () => {
     try {
       const { data } = await axios.put("/api/v1/me/update", { name, email });
-      toast.success("Profile Updated", { theme: "dark" });
+      toast.success("Profile Updated", { theme: "dark" , position:"bottom-right"});
       dispatch({
         type: "USER_LOAD_SUCCESS",
         payload: data.user,
@@ -24,7 +24,7 @@ export default function UpdateProfile() {
       navigate("/account");
       // console.log(data);
     } catch (error) {
-      toast.error(error.response.data.message, { theme: "dark" });
+      toast.error(error.response.data.message, { theme: "dark", position:"bottom-right" });
     }
   };
   return (

@@ -38,15 +38,15 @@ export default function Signin() {
     try {
       setLoad(true);
       if (email === "" ) {
-        toast.error("Please enter Email", { theme: "dark" });
+        toast.error("Please enter Email", { theme: "dark", position:"bottom-right" });
         setLoad(false);
         return;
       }
       const { data } = await axios.post("/api/v1/password/forgot", { email });
-      toast.success(data.message , {theme:"dark"})
+      toast.success(data.message , {theme:"dark", position:"bottom-right"})
       setLoad(false);
     } catch (error) {
-      toast.error(error.response.data.message, { theme: "dark" });
+      toast.error(error.response.data.message, { theme: "dark", position:"bottom-right" });
       setLoad(false);
     }
   };

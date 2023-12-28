@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import Loading from "./Loading";
 import ReactStars from "react-rating-stars-component";
 import ReviewCard from "./ReviewCard";
-
+import { addToCart } from "../actions/cartActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MetaData from "./MetaData";
@@ -13,16 +13,19 @@ import MetaData from "./MetaData";
 export default function ProductDetails() {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const [cnt, setCnt] = useState(0);
+  const [cnt, setCnt] = useState(1);
   const { product, loading, error } = useSelector((store) => store.productDetails);
     useEffect(() => {
         dispatch(getProductDetails(id));
         if(error){
-            toast.error(error, { theme: "dark" });
+            toast.error(error, { theme: "dark", position:"bottom-right" });
             dispatch(clearErrors());
         }
     }, [dispatch, id,error]);
-    
+    const addtocartHandler = ()=>{
+      dispatch(addToCart(product,cnt));
+      toast.success("Added to cart", {theme:"dark", position:"bottom-right"})
+    }
     const options = {
       edit: false,
       color: "rgba(20,20,20,0.1)",
@@ -42,7 +45,7 @@ export default function ProductDetails() {
     }
   };
   const decrease = () => {
-    if (cnt > 0) {
+    if (cnt > 1) {
       setCnt(cnt - 1);
     }
   };
@@ -105,26 +108,30 @@ export default function ProductDetails() {
                   </div>
 
                   <div className="flex ml-6 items-center">
+                    <h1>Quantity : </h1>
+                    <div className="flex ml-6 items-center">
+
                     <button
-                      onClick={increase}
-                      className="p-2 font-bold  bg-gray-500 rounded-l-xl "
+                      onClick={decrease}
+                      className="p-2 font-bold px-3 bg-gray-500 rounded-l-xl "
                       >
-                      +
+                      -
                     </button>
                     <p className="bg-white p-2 px-3 text-black">{cnt}</p>
                     <button
-                      onClick={decrease}
                       className="p-2 px-3 font-bold  bg-gray-500 rounded-r-xl"
-                    >
-                      -
+                      onClick={increase}
+                      >
+                      +
                     </button>
+                      </div>
                   </div>
                 </div>
                 <div className="flex">
                   <span className="title-font font-medium text-2xl text-white">
                     Rs. {product.price}
                   </span>
-                  <button className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
+                  <button onClick={addtocartHandler} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
                     Add to Cart
                   </button>
                 </div>

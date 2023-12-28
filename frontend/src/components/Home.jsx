@@ -15,7 +15,7 @@ export default function Home() {
   const { loading,error, products } = useSelector((store) => store.products);
   useEffect(() => {
     if (error) {
-      toast.error(error, { theme: "dark" });
+      toast.error(error, { theme: "dark", position:"bottom-right" });
       dispatch(clearErrors());
     }
     dispatch(getProduct());

@@ -2,17 +2,17 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../actions/userActions";
-
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Header() {
   const { isAuth, user } = useSelector((store) => store.user);
+  const {cartItems} = useSelector(store=>store.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logoutHandler = () => {
     dispatch(logout());
-    toast.success("Logged Out Successfully",{theme:"dark"})
+    toast.success("Logged Out Successfully",{theme:"dark", position:"bottom-right"})
     navigate("/");
   };
   return (
@@ -49,13 +49,16 @@ export default function Header() {
               className="fa-solid fa-magnifying-glass hover:text-white"
             ></i>
           </Link>
-          <a href="/#">
+          <Link to="/cart" >
             {" "}
             <i
-              title="cart"
+              title={`cart ${cartItems.length}`}
+              style={{
+                color : cartItems.length ? "white" : "gray",
+              }}
               className="fa-solid fa-cart-shopping hover:text-white"
             ></i>
-          </a>
+          </Link>
           {isAuth && user ? (
             <div className="flex flex-row gap-3">
               <Link to="/account">

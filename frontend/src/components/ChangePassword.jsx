@@ -22,14 +22,14 @@ export default function ChangePassword() {
         setOld("");
         setNew1("");
         setNew2("");
-      toast.success("Password Changed", { theme: "dark" });
+      toast.success("Password Changed", { theme: "dark" , position:"bottom-right"});
       dispatch({
         type: "USER_LOAD_SUCCESS",
         payload: data.user,
       });
       navigate("/account");
     } catch (error) {
-        toast.error(error.response.data.message, { theme: "dark" });
+        toast.error(error.response.data.message, { theme: "dark", position:"bottom-right" });
     }
   };
   const [pwVis,setPwVis] = useState("passowrd");

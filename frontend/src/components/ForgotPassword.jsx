@@ -26,9 +26,9 @@ export default function ForgotPassword() {
                 payload : data.user,
             })
             navigate("/");
-            toast.success("Password Changed successfully", {theme : "dark"});
+            toast.success("Password Changed successfully", {theme : "dark", position:"bottom-right"});
         } catch (error) {
-            toast.error(error.response.data.message, {theme : "dark"});
+            toast.error(error.response.data.message, {theme : "dark", position:"bottom-right"});
         }
     }
     useEffect(()=>{
