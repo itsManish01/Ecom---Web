@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, clearErrors, register } from "../actions/userActions";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import MetaData from "./MetaData";
 
 export default function Signin() {
   const [type, setType] = useState("Login");
@@ -70,7 +71,7 @@ export default function Signin() {
               <button
                 style={{
                   background:
-                    type === "Login" ? "rgb(234 179 8)" : "rgb(55 65 81)",
+                  type === "Login" ? "rgb(234 179 8)" : "rgb(55 65 81)",
                 }}
                 className=" p-2 rounded-l font-semibold"
                 onClick={() => {
@@ -84,7 +85,7 @@ export default function Signin() {
                 style={{
                   background:
                     type === "SignUp" ? "rgb(234 179 8)" : "rgb(55 65 81)",
-                }}
+                  }}
                 className=" p-2 rounded-r font-semibold"
                 onClick={() => setType("SignUp")}
               >
@@ -97,6 +98,7 @@ export default function Signin() {
           </div>
           {type === "Login" ? (
             <div className="flex lg:w-2/3 w-full sm:flex-col  gap-3 flex-col mx-auto px-8 sm:px-0 items-end sm:space-x-4 sm:space-y-0 space-y-4">
+              <MetaData title={"Ecom - Login"} />
               <div className="relative sm:mb-0 flex-grow w-full">
                 <label className="leading-7 text-sm text-gray-400">Email</label>
                 <input
@@ -134,6 +136,7 @@ export default function Signin() {
             </div>
           ) : (
             <div className="flex lg:w-2/3 w-full sm:flex-col  gap-3 flex-col mx-auto px-8 sm:px-0 items-end sm:space-x-4 sm:space-y-0 space-y-4">
+              <MetaData title={"Ecom - SignUp"} />
               <div className="relative sm:mb-0 flex-grow w-full">
                 <label className="leading-7 text-sm text-gray-400">Name</label>
                 <input

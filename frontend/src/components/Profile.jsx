@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import UpdateProfile from "./UpdateProfile";
 import ChangePassword from "./ChangePassword.jsx"
 import Orders from "./Orders.jsx"
+import MetaData from "./MetaData.js";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function Profile() {
 
   return (
     <div>
+      <MetaData title={"Ecom - User account"}/>
       <section className="text-gray-400 bg-gray-900 body-font">
           <div className="container px-5 py-4 mx-auto flex flex-col">
         {loading ? (
