@@ -3,24 +3,44 @@ import homePng from "./images/home.png";
 import ProductCard from "./ProductCard.jsx";
 import { HashLink } from "react-router-hash-link";
 import MetaData from "./MetaData.js";
-import { getProduct, clearErrors } from "../actions/productActions.js";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "./Loading.jsx";
-
+import axios from "axios";
+import {
+  ALL_PRODUCT_FAIL,
+  ALL_PRODUCT_REQUEST,
+  ALL_PRODUCT_SUCCESS,
+} from "../constants/productConstants";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { loading,error, products } = useSelector((store) => store.products);
-  useEffect(() => {
-    if (error) {
-      toast.error(error, { theme: "dark", position:"bottom-right" });
-      dispatch(clearErrors());
-    }
-    dispatch(getProduct());
-  }, [dispatch,error]);
-
+  const { loading, products } = useSelector((store) => store.products);
+  useEffect(
+    () => async () => {
+      try {
+        dispatch({
+          type: ALL_PRODUCT_REQUEST,
+        });
+        let url = '/api/v1/products';
+        const { data } = await axios.get(url);
+        dispatch({
+          type: ALL_PRODUCT_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ALL_PRODUCT_FAIL,
+          payload: error.response.data.message,
+        });
+        toast.error(error.response.data.message, {theme:"dark",position:"bottom-right"})
+      }
+    },
+    [
+      dispatch,
+    ]
+  );
   return (
     <>
       <MetaData title={"Ecom - Home"} />

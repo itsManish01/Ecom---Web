@@ -9,7 +9,8 @@ import Search from "./components/Search.jsx";
 import Signin from "./components/Signin.jsx"
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { loadUser } from "./actions/userActions.js";
+import axios from "axios";
+import {USER_LOAD_FAIL,  USER_LOAD_SUCCESS,  USER_LOAD_REQUEST,} from "./constants/userConstants.js"
 import Profile from "./components/Profile.jsx"
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import Cart from "./components/Cart.jsx"
@@ -20,8 +21,21 @@ import OrderDetails from './components/OrderDetails'
 function App() {
 
   const dispatch = useDispatch();
-  useEffect(()=>{
-    dispatch(loadUser());
+  useEffect(()=>async()=>{
+    try {
+      dispatch({
+        type: USER_LOAD_REQUEST
+      });
+      const {data}=await axios.get("/api/v1/me");
+      dispatch({
+        type : USER_LOAD_SUCCESS,
+        payload : data.user,
+      })
+    } catch (error) {
+      dispatch({
+        type : USER_LOAD_FAIL,
+      })
+    }
   },[dispatch])
   return (
     <Router >

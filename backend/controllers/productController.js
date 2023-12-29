@@ -19,7 +19,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res,next) => {
     .search()
     .filter()
     .pagination(productCountPerPage);
-
+    
   const products = await apiFeatures.query;
   res.status(200).json({
     success: true,
@@ -33,11 +33,11 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
   let product = await Product.findById(req.params.id);
   // if(!product){
   //     return res.status(500).json({
-  //         sucess : false,
+    //         sucess : false,
   //         message : "product not found"
   //     })
   // }
-
+  
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
@@ -47,7 +47,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
     runValidators: true,
     useFindAndModify: false,
   });
-
+  
   res.status(200).json({
     success: true,
     message: "Product Updated",

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { clearErrors, getProductDetails } from "../actions/productActions";
+import { PRODUCT_DETAILS_REQUEST,PRODUCT_DETAILS_FAIL,PRODUCT_DETAILS_SUCCESS } from "../constants/productConstants";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loading from "./Loading";
@@ -9,35 +9,51 @@ import { addToCart } from "../actions/cartActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MetaData from "./MetaData";
+import axios from "axios";
+
 
 export default function ProductDetails() {
+  const { product, loading } = useSelector((store) => store.productDetails);
   const dispatch = useDispatch();
   const { id } = useParams();
   const [cnt, setCnt] = useState(1);
-  const { product, loading, error } = useSelector((store) => store.productDetails);
-    useEffect(() => {
-        dispatch(getProductDetails(id));
-        if(error){
-            toast.error(error, { theme: "dark", position:"bottom-right" });
-            dispatch(clearErrors());
-        }
-    }, [dispatch, id,error]);
-    const addtocartHandler = ()=>{
-      dispatch(addToCart(product,cnt));
-      toast.success("Added to cart", {theme:"dark", position:"bottom-right"})
-    }
-    const options = {
-      edit: false,
-      color: "rgba(20,20,20,0.1)",
-      activeColor: "tomato",
-      value: 5,
-      isHalf: true,
-      size: window.innerWidth < 600 ? 15 : 25,
-    };
+  useEffect(
+    () => async () => {
+      try {
+        dispatch({
+          type: PRODUCT_DETAILS_REQUEST,
+        });
+        const { data } = await axios.get(`/api/v1/product/${id}`);
+        dispatch({
+          type: PRODUCT_DETAILS_SUCCESS,
+          payload: data.product,
+        });
+      } catch (error) {
+        dispatch({
+          type: PRODUCT_DETAILS_FAIL,
+          payload: error.response.data.message,
+        });
+        toast.error(error.response.data.message,{ theme: "dark", position: "bottom-right" });
+      }
+    },
+    [dispatch, id]
+  );
+  const addtocartHandler = () => {
+    dispatch(addToCart(product, cnt));
+    toast.success("Added to cart", { theme: "dark", position: "bottom-right" });
+  };
+  const options = {
+    edit: false,
+    color: "rgba(20,20,20,0.1)",
+    activeColor: "tomato",
+    value: 5,
+    isHalf: true,
+    size: window.innerWidth < 600 ? 15 : 25,
+  };
   const copyToClipBoard = () => {
     let text = document.getElementById("productID").innerHTML;
     navigator.clipboard.writeText(`http://localhost:3000/products/${text}`);
-    toast.success("Link coppied!", { theme: "dark" });
+    toast.success("Link coppied!", { theme: "dark" ,position : "bottom-right"});
   };
   const increase = () => {
     if (cnt < product.stock) {
@@ -54,99 +70,103 @@ export default function ProductDetails() {
       <section className="text-gray-400 bg-gray-900 body-font flex justify-centeroverflow-hidden">
         {loading && !product ? (
           <Loading />
-          ) : (
-            <>
+        ) : (
+          <>
             <MetaData title={`Ecom - ${product.name}`} />
-          <div className="container px-5 py-24 mx-auto">
-            <div className="lg:w-4/5 mx-auto flex flex-wrap">
-              {/* Carousel to be added */}
-              {product.images ? (
-                <img
-                  alt="ecommerce"
-                  className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                  src={product.images[0].url}
-                />
-              ) : (
-                <Loading />
-              )}
-              <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                <h2 className="text-sm title-font text-gray-500 tracking-widest">
-                  {product.category}
-                </h2>
-                <h1 className="text-white text-3xl title-font font-medium mb-1">
-                  {product.name}
-                </h1>
-                <p className="flex flex-row py-2 items-center">
-                  Product ID # <p id="productID">{product._id}</p>
-                  <button
-                    title="share"
-                    className="mx-2 px-2 py-1 bg-yellow-500 text-white rounded-2xl"
-                    onClick={copyToClipBoard}
-                  >
-                    <i className ="fas fa-share"></i>
-                  </button>
-                </p>
-                <div className="flex mb-4">
-                  <span className="flex items-center">
-                    <span className="ml-3">
-                      <ReactStars {...options} />{" "}
+            <div className="container px-5 py-24 mx-auto">
+              <div className="lg:w-4/5 mx-auto flex flex-wrap">
+                {/* Carousel to be added */}
+                {product.images ? (
+                  <img
+                    alt="ecommerce"
+                    className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                    src={product.images[0].url}
+                  />
+                ) : (
+                  <Loading />
+                )}
+                <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                  <h2 className="text-sm title-font text-gray-500 tracking-widest">
+                    {product.category}
+                  </h2>
+                  <h1 className="text-white text-3xl title-font font-medium mb-1">
+                    {product.name}
+                  </h1>
+                  <p className="flex flex-row py-2 items-center">
+                    Product ID # <p id="productID">{product._id}</p>
+                    <button
+                      title="share"
+                      className="mx-2 px-2 py-1 bg-yellow-500 text-white rounded-2xl"
+                      onClick={copyToClipBoard}
+                    >
+                      <i className="fas fa-share"></i>
+                    </button>
+                  </p>
+                  <div className="flex mb-4">
+                    <span className="flex items-center">
+                      <span className="ml-3">
+                        <ReactStars {...options} />{" "}
+                      </span>
                     </span>
-                  </span>
-                  <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-800 text-gray-500 space-x-2">
-                    {product.numOfReviews} Reviews
-                  </span>
-                </div>
-                <p className="leading-relaxed">{product.description}</p>
-                <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-800 mb-5">
-                  <div className="flex">
-                    <span className="mr-3">Stock :</span>
-                    {product.stock ? (
-                      <p className="text-green-600 font-semibold"> InStock</p>
-                    ) : (
-                      <p className="text-red-700 font-semibold">OutOfStock</p>
+                    <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-800 text-gray-500 space-x-2">
+                      {product.numOfReviews} Reviews
+                    </span>
+                  </div>
+                  <p className="leading-relaxed">{product.description}</p>
+                  <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-800 mb-5">
+                    <div className="flex">
+                      <span className="mr-3">Stock :</span>
+                      {product.stock ? (
+                        <p className="text-green-600 font-semibold"> InStock</p>
+                      ) : (
+                        <p className="text-red-700 font-semibold">OutOfStock</p>
                       )}
-                  </div>
+                    </div>
 
-                  <div className="flex ml-6 items-center">
-                    <h1>Quantity : </h1>
                     <div className="flex ml-6 items-center">
-
-                    <button
-                      onClick={decrease}
-                      className="p-2 font-bold px-3 bg-gray-500 rounded-l-xl "
-                      >
-                      -
-                    </button>
-                    <p className="bg-white p-2 px-3 text-black">{cnt}</p>
-                    <button
-                      className="p-2 px-3 font-bold  bg-gray-500 rounded-r-xl"
-                      onClick={increase}
-                      >
-                      +
-                    </button>
+                      <h1>Quantity : </h1>
+                      <div className="flex ml-6 items-center">
+                        <button
+                          onClick={decrease}
+                          className="p-2 font-bold px-3 bg-gray-500 rounded-l-xl "
+                        >
+                          -
+                        </button>
+                        <p className="bg-white p-2 px-3 text-black">{cnt}</p>
+                        <button
+                          className="p-2 px-3 font-bold  bg-gray-500 rounded-r-xl"
+                          onClick={increase}
+                        >
+                          +
+                        </button>
                       </div>
+                    </div>
                   </div>
-                </div>
-                <div className="flex">
-                  <span className="title-font font-medium text-2xl text-white">
-                    Rs. {product.price}
-                  </span>
-                  <button onClick={addtocartHandler} className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded">
-                    Add to Cart
+                  <div className="flex">
+                    <span className="title-font font-medium text-2xl text-white">
+                      Rs. {product.price}
+                    </span>
+                    <button
+                      onClick={addtocartHandler}
+                      className="flex ml-auto text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                  <button className="flex mt-5  text-white bg-pink-400 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                    Submit review
                   </button>
                 </div>
-                <button className="flex mt-5  text-white bg-pink-400 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
-                  Submit review
-                </button>
               </div>
-            </div>
-          </div> </>
+            </div>{" "}
+          </>
         )}
       </section>
-    
-    <section className ="text-gray-400 bg-gray-900 body-font">
-        <div className ="container px-5 py-8 mx-auto">
-          <h1 className ="text-3xl font-medium title-font text-white mb-12 text-center">
+     {loading ? (<></>) : (
+
+       <section className="text-gray-400 bg-gray-900 body-font">
+        <div className="container px-5 py-8 mx-auto">
+          <h1 className="text-3xl font-medium title-font text-white mb-12 text-center">
             Reviews
           </h1>
 
@@ -166,7 +186,8 @@ export default function ProductDetails() {
           )}
         </div>
       </section>
+      )}
       <ToastContainer />
     </>
-    );
+  );
 }

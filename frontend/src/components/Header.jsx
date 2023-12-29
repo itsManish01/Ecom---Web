@@ -29,18 +29,18 @@ export default function Header() {
           </Link>
         </a>
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a className="mr-5 hover:text-white" href="/">
+          <Link className="mr-5 hover:text-white" to="/">
             Home
-          </a>
-          <a className="mr-5 hover:text-white" href="/products">
+          </Link>
+          <Link className="mr-5 hover:text-white" to="/products">
             Products
-          </a>
-          <a className="mr-5 hover:text-white" href="/#">
+          </Link>
+          <Link className="mr-5 hover:text-white" to="/#">
             Contact
-          </a>
-          <a className="mr-5 hover:text-white" href="/#">
+          </Link>
+          <Link className="mr-5 hover:text-white" to="/#">
             About
-          </a>
+          </Link>
         </nav>
         <div className="flex gap-5 mx-2 text-xl">
           <Link to="/search">
