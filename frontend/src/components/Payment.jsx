@@ -58,7 +58,7 @@ export default function Payment() {
         theme: "dark",
         position: "bottom-right",
       });
-      navigate(`/order/details`);
+      navigate(`/order/success`);
     } catch (error) {
       dispatch({
         type: ORDER_FAIL,
