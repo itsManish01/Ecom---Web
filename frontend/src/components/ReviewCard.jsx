@@ -23,7 +23,7 @@ export default function ReviewCard({review}) {
           <span className ="inline-flex items-center w-full">
             <span className ="flex-grow flex flex-col pl-4">
               <span className ="title-font font-medium text-white">{review.name}</span>
-              <span className ="text-gray-500 text-sm">review date</span>
+              <span className ="text-gray-500 text-sm">{review.createdAt.split('T')[0]}</span>
             </span>
             <ReactStars {...options} />
           </span>

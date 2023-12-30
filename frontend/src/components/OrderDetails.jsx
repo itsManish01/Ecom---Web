@@ -64,9 +64,9 @@ export default function OrderDetails() {
               </div>
               <h1 class="sm:text-xl text-lg font-medium title-font mb-4 text-white">
                 Order Status :
-                {orderDetails.orderStatus==="Processing" && (<span className="text-blue-500"> {orderDetails.orderStatus}</span>) } 
-                {orderDetails.orderStatus==="Delivered" && (<span className="text-green-500"> {orderDetails.orderStatus}</span>) } 
-                {orderDetails.orderStatus==="Shipped" && (<span className="text-yellow-500"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Processing" && (<span className="text-blue-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Delivered" && (<span className="text-green-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Shipped" && (<span className="text-yellow-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
               </h1>
               <h1 class="sm:text-xl text-lg font-medium title-font mb-4 text-white">
                 Ordered Items
@@ -111,7 +111,7 @@ export default function OrderDetails() {
                   <span> Subtotal : {orderDetails.itemPrice}</span>
                   <span> TAX (18%) : {orderDetails.taxPrice}</span>
                   <span> Shipping Price : {orderDetails.shippingPrice}</span>
-                  <span> Total Amount : {orderDetails.totalPrice}</span>
+                  <span className="font-semibold text-lg"> Total Amount : {orderDetails.totalPrice}</span>
                   <span>
                     {" "}
                     Payment Status : {orderDetails.paymentInfo.status}
@@ -125,7 +125,7 @@ export default function OrderDetails() {
               <div>
                 {orderDetails.orderStatus!=="Delivered" && (
                   <button
-                  class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded"
+                  class="flex ml-auto text-white bg-red-500 mx-2 px-2 py-2 rounded-sm-500 border-0 focus:outline-none hover:bg-yellow-600 rounded"
                   >Cancel Order</button>
 
                 )}
