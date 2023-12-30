@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_FAIL,
@@ -33,41 +33,16 @@ export default function ProductDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
-  const [cnt, setCnt] = useState(1);
-  const [modal, setModal] = useState(false);
-  const toggleModal = () => {
-    setModal(!modal);
-  };
-  const [comment, setComment] = useState("");
-  const [ratingSubmit, setRatingSubmit] = useState(0);
-  useEffect(
-    () => async () => {
-      try {
-        dispatch({
-          type: PRODUCT_DETAILS_REQUEST,
-        });
-        const { data } = await axios.get(`/api/v1/product/${id}`);
-        dispatch({
-          type: PRODUCT_DETAILS_SUCCESS,
-          payload: data.product,
-        });
-      } catch (error) {
-        dispatch({
-          type: PRODUCT_DETAILS_FAIL,
-          payload: error.response.data.message,
-        });
-        toast.error(error.response.data.message, {
-          theme: "dark",
-          position: "bottom-right",
-        });
-      }
-    },
-    [dispatch, id]
-  );
-  const addtocartHandler = () => {
-    dispatch(addToCart(product, cnt));
-    toast.success("Added to cart", { theme: "dark", position: "bottom-right" });
-  };
+  const dispatchAction=useCallback(async()=>{
+    dispatch({
+      type: PRODUCT_DETAILS_REQUEST,
+    });
+    const { data } = await axios.get(`/api/v1/product/${id}`);
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data.product,
+    });
+  },[id,dispatch])
   const submitReviewHandler = async() => {
     if (isAuth) {
       const newReview = {
@@ -78,20 +53,9 @@ export default function ProductDetails() {
       try {
         await axios.put("/api/v1/review",newReview);
         toast.success("Review Added",{theme:"dark",position:"bottom-right"});
-        dispatch({
-          type: PRODUCT_DETAILS_REQUEST,
-        });
-        const { data } = await axios.get(`/api/v1/product/${id}`);
-        dispatch({
-          type: PRODUCT_DETAILS_SUCCESS,
-          payload: data.product,
-        });
+        dispatchAction();
         setModal(!modal);
       } catch (error) {
-        dispatch({
-          type: PRODUCT_DETAILS_FAIL,
-          payload: error.response.data.message,
-        });
         toast.error(error.response.data.message, {
           theme: "dark",
           position: "bottom-right",
@@ -103,14 +67,35 @@ export default function ProductDetails() {
     }
   };
 
-  const options = {
-    edit: false,
-    color: "rgba(20,20,20,0.1)",
-    activeColor: "tomato",
-    value: product.rating,
-    isHalf: true,
-    size: window.innerWidth < 600 ? 15 : 25,
+  useEffect(
+    () => async () => {
+      try {
+          dispatchAction();
+      } catch (error) {
+        dispatch({
+          type: PRODUCT_DETAILS_FAIL,
+          payload: error.response.data.message,
+        });
+        toast.error(error.response.data.message, {
+          theme: "dark",
+          position: "bottom-right",
+        });
+      }
+    },
+    [dispatch,dispatchAction]
+    );
+    const [cnt, setCnt] = useState(1);
+    const [modal, setModal] = useState(false);
+  const toggleModal = () => {
+    setModal(!modal);
   };
+  const [comment, setComment] = useState("");
+  const [ratingSubmit, setRatingSubmit] = useState(0);
+  const addtocartHandler = () => {
+    dispatch(addToCart(product, cnt));
+    toast.success("Added to cart", { theme: "dark", position: "bottom-right" });
+  };
+  
   const copyToClipBoard = () => {
     let text = document.getElementById("productID").innerHTML;
     navigator.clipboard.writeText(`http://localhost:3000/products/${text}`);
@@ -129,7 +114,7 @@ export default function ProductDetails() {
   return (
     <>
       <section className="text-gray-400 bg-gray-900 body-font flex justify-centeroverflow-hidden">
-        {loading && !product ? (
+        {loading ? (
           <Loading />
         ) : (
           <>
@@ -166,7 +151,13 @@ export default function ProductDetails() {
                   <div className="flex mb-4">
                     <span className="flex items-center">
                       <span className="ml-3">
-                        <ReactStars {...options} />{" "}
+                        {loading ? (<Loading/>) : (
+                          <>
+                          {
+                            Array(Math.round(product.rating)).fill('').map((_, index) => <i class="fa-sharp fa-regular fa-star text-yellow-500 text-2xl"></i>)
+                          }
+                          </>
+                        )}
                       </span>
                     </span>
                     <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-800 text-gray-500 space-x-2">
@@ -282,7 +273,7 @@ export default function ProductDetails() {
 
             {product.reviews && product.reviews[0] ? (
               <>
-                <div className="flex flex-wrap flex-row -m-4 overflow-x-auto">
+                <div className="overflow-x-auto flex flex-row -m-4 flex-wrap">
                   {product.reviews &&
                     product.reviews.map((item) => {
                       return <ReviewCard review={item} />;
