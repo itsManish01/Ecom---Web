@@ -37,7 +37,6 @@ exports.createOrder = catchAsyncErrors(async (req, res, next) => {
 // get a single order
 exports.getSingleOrder = catchAsyncErrors( async(req,res,next) => {
     const order = await Order.findById(req.params.id).populate("user").populate("orderItems.product");
-
     if(!order){
         return next(new ErrorHandler(`Invalid Order ID : ${req.params.id}`,400));
     }
@@ -50,10 +49,10 @@ exports.getSingleOrder = catchAsyncErrors( async(req,res,next) => {
 //get all orders of a user 
 exports.myOrders = catchAsyncErrors( async(req,res,next) => {
     const orders = await Order.find({user : req.user._id}).populate("orderItems.product");
-
+    
     res.status(200).json({
         success : true,
-        orders
+        orders,
     })
 })
 

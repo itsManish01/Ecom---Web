@@ -5,8 +5,8 @@ import Loading from "./Loading";
 
 import UpdateProfile from "./UpdateProfile";
 import ChangePassword from "./ChangePassword.jsx"
-import Orders from "./Orders.jsx"
 import MetaData from "./MetaData.js";
+import AllOrders from "./AllOrders.jsx";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -68,7 +68,7 @@ export default function Profile() {
                     </div>
                   </div>
                   {option===1 && (<UpdateProfile/>)}
-                  {option===2 && (<Orders/>)}
+                  {option===2 && (<AllOrders/>)}
                   {option===3 && (<ChangePassword/>)}
                 </div>
               </div>

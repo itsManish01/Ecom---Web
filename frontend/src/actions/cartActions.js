@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART , SHIPPING_ADD } from "../constants/cartConstants"
+import { ADD_TO_CART, REMOVE_FROM_CART , SHIPPING_ADD , CLEAR_CART} from "../constants/cartConstants"
 export const addToCart = (product,quantity)=> async(dispatch,getState)=>{
 
     dispatch({
@@ -31,4 +31,10 @@ export const shippingAdd = (details) =>async(dispatch,getState)=>{
         payload : details
     })
     localStorage.setItem("shippingInfo", JSON.stringify(getState().cart.shippingInfo));
+}
+export const clearCart = ()=> async(dispatch)=>{
+    dispatch ({
+        type : CLEAR_CART,
+    })
+    localStorage.clear("cartItems");
 }

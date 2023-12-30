@@ -17,9 +17,10 @@ import Cart from "./components/Cart.jsx"
 import Shipping from "./components/Shipping.jsx"
 import Payment from "./components/Payment.jsx";
 import OrderSummary from "./components/OrderSummary.jsx"
-import OrderDetails from './components/OrderDetails'
+// import OrderDetails from './components/OrderDetails'
 import OrderPlaced from "./components/OrderPlaced.jsx"
-
+import AllOrders from "./components/AllOrders.jsx"
+import OrderDetails from "./components/OrderDetails.jsx";
 
 function App() {
 
@@ -57,7 +58,8 @@ function App() {
           <Route path="/order/summary" element={<OrderSummary />} />
           <Route path="/order/payment" element={<Payment/>} />
           <Route path="/order/success" element={<OrderPlaced/>} />
-          <Route path="/order/details" element={<OrderDetails/>} />
+          <Route path="/order/me" element={<AllOrders/>} />
+          <Route path="/order/details/:id" element={<OrderDetails/>} />
         </Routes>
       <Footer />
     </Router>

@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART ,SHIPPING_ADD } from "../constants/cartConstants";
+import { ADD_TO_CART, REMOVE_FROM_CART ,SHIPPING_ADD , CLEAR_CART } from "../constants/cartConstants";
 
 const initialState = {
   cartItems: localStorage.getItem("cartItems")
@@ -30,6 +30,11 @@ export const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         shippingInfo : action.payload,    
+      }
+      case CLEAR_CART : 
+      return{
+        ...state,
+        cartItems : []
       }
     default:
       return state;
