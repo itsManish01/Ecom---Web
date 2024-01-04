@@ -50,7 +50,7 @@ export default function AllOrders() {
           <>
             {orders.map((item) => {
               return (
-                <Link to={`/order/details/${item._id}`} class="w-full p-4">
+                <Link to={`/order/details/${item._id}`} class="w-full p-4" key={item._id}>
                   <div class="border border-gray-700 border-opacity-75 p-3 rounded-lg">
                     <h2 class="text-lg text-white font-medium title-font">
                       {item.orderStatus==="Processing" && (<span className="text-blue-700 bg-gray-300 rounded-sm p-1">Processing</span>)}

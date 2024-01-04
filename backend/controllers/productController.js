@@ -28,6 +28,15 @@ exports.getAllProducts = catchAsyncErrors(async (req, res,next) => {
   });
 });
 
+//admin all products
+exports.getAllProductsAdmin = catchAsyncErrors( async(req,res,next)=>{
+  const products = await Product.find({}).sort({createdAt : 'desc'});
+  res.status(200).json({
+    success: true,
+    products,
+  })
+})
+
 //update a product
 exports.updateProduct = catchAsyncErrors(async (req, res) => {
   let product = await Product.findById(req.params.id);

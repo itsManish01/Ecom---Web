@@ -9,17 +9,7 @@ import Pagination from "react-js-pagination";
 import "./CSS/pagination.css";
 import MetaData from "./MetaData";
 import { getProduct } from "../actions/productActions";
-
-const categories = [
-  "All",
-  "Mobiles",
-  "Footwear",
-  "Electronics",
-  "Kitchen",
-  "BodyProducts",
-  "Medical",
-  "Styling",
-];
+import {categories} from "../constants/categories"
 
 export default function Products() {
   const { loading, products, productsCount } = useSelector(

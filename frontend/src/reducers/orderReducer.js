@@ -14,7 +14,7 @@ export const orderReducer = (state = initialState1, action)=>{
     case  ORDER_DETAILS_REQUEST: 
       return {
         loading : true,
-        ...state,
+        orderDetails:{},
       }
     case ORDER_SUCCESS:
     case ORDER_DETAILS_SUCCESS :

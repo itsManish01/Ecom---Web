@@ -70,13 +70,11 @@ export default function Header() {
                 />
                 </Link>
                 {isAuth && user.role==="admin" && (
-                <Link to="/dashboard" title="DashBoard">
-                <i className ="fa-solid fa-chart-simple hover:text-pink-600"></i>
+                <Link to="/admin" title="DashBoard">
+                <i className ="fa-solid fa-chart-simple hover:text-pink-600 text-sm"> DashBoard</i>
                 </Link>
                 )}
-              <Link to="/orders/me" title="orders">
-                <i className ="fa-solid fa-truck  hover:text-yellow-500"></i>
-              </Link>
+                
               <button title="logout" onClick={logoutHandler}>
                 <i className ="fas fa-sign-out  hover:text-red-700"></i>
               </button>

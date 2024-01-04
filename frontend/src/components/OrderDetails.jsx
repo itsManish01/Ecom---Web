@@ -14,26 +14,27 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 export default function OrderDetails() {
   const { id } = useParams();
+  const { isAuth } = useSelector((store) => store.user);
   const { loading, orderDetails } = useSelector((store) => store.order);
   const dispatch = useDispatch();
-  const { isAuth } = useSelector((store) => store.user);
   const navigate = useNavigate();
   useEffect(
     () => async () => {
+      if (!isAuth) {
+        navigate("/signin");
+        return;
+      }
       try {
-        if (!isAuth) {
-          navigate("/signin");
-          return;
-        }
+        console.log(id);
         dispatch({
           type: ORDER_DETAILS_REQUEST,
         });
         const { data } = await axios.get(`/api/v1/order/details/${id}`);
-        console.log(data.order);
         dispatch({
           type: ORDER_DETAILS_SUCCESS,
           payload: data.order,
         });
+        console.log(data.order);
       } catch (error) {
         // console.log(error);
         toast.error(error.response.data.message, {
@@ -67,12 +68,13 @@ export default function OrderDetails() {
                 {orderDetails.orderStatus==="Processing" && (<span className="text-blue-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
                 {orderDetails.orderStatus==="Delivered" && (<span className="text-green-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
                 {orderDetails.orderStatus==="Shipped" && (<span className="text-yellow-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Cancelled" && (<span className="text-red-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
               </h1>
               <h1 class="sm:text-xl text-lg font-medium title-font mb-4 text-white">
                 Ordered Items
               </h1>
               <div class="flex flex-wrap -m-2">
-                {orderDetails.orderItems.map((it) => (
+                {orderDetails.orderItems && orderDetails.orderItems.map((it) => (
                   <div class="p-2 lg:w-1/3 md:w-1/2 w-full">
                     <Link to={`/product/${it.product._id}`}>
                       <div class="h-full flex items-center border-gray-800 border p-4 rounded-lg bg-gray-800">
@@ -92,7 +94,7 @@ export default function OrderDetails() {
                   </div>
                 ))}
               </div>
-              <div className="flex sm:flex-row flex-col gap-5 ">
+              {orderDetails.shippingInfo && (<div className="flex sm:flex-row flex-col gap-5 ">
                 <div className="flex flex-col w-1/2 ">
                   <h1 class="sm:text-xl text-lg font-medium title-font mb-4 text-white mt-4">
                     Shipping Details
@@ -121,9 +123,9 @@ export default function OrderDetails() {
                     Payment Transaction Id : {orderDetails.paymentInfo.id}
                   </span>
                 </div>
-              </div>
+              </div>)}
               <div>
-                {orderDetails.orderStatus!=="Delivered" && (
+                {orderDetails.orderStatus!=="Delivered" && orderDetails.orderStatus!=="Cancelled" && (
                   <button
                   class="flex ml-auto text-white bg-red-500 mx-2 px-2 py-2 rounded-sm-500 border-0 focus:outline-none hover:bg-yellow-600 rounded"
                   >Cancel Order</button>

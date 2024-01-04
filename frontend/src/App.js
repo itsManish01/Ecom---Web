@@ -17,11 +17,10 @@ import Cart from "./components/Cart.jsx"
 import Shipping from "./components/Shipping.jsx"
 import Payment from "./components/Payment.jsx";
 import OrderSummary from "./components/OrderSummary.jsx"
-// import OrderDetails from './components/OrderDetails'
 import OrderPlaced from "./components/OrderPlaced.jsx"
 import AllOrders from "./components/AllOrders.jsx"
 import OrderDetails from "./components/OrderDetails.jsx";
-
+import Dashboard from "./components/admin/Dashboard.jsx";
 function App() {
 
   const dispatch = useDispatch();
@@ -60,6 +59,7 @@ function App() {
           <Route path="/order/success" element={<OrderPlaced/>} />
           <Route path="/order/me" element={<AllOrders/>} />
           <Route path="/order/details/:id" element={<OrderDetails/>} />
+          <Route path="/admin" element={<Dashboard/>} />
         </Routes>
       <Footer />
     </Router>
