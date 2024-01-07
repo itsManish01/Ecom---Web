@@ -32,6 +32,7 @@ export default function ProductDetails() {
   const { product, loading } = useSelector((store) => store.productDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [preview , setPreview] = useState("");
   const { id } = useParams();
   const dispatchAction=useCallback(async()=>{
     dispatch({
@@ -123,11 +124,14 @@ export default function ProductDetails() {
               <div className="lg:w-4/5 mx-auto flex flex-wrap">
                 {/* Carousel to be added */}
                 {product.images ? (
-                  <img
-                    alt="ecommerce"
-                    className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                    src={product.images[0].url}
-                  />
+                  <>
+                    <img
+                      alt="ecommerce"
+                      className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                      src={preview}
+                    />
+
+                  </>
                 ) : (
                   <Loading />
                 )}

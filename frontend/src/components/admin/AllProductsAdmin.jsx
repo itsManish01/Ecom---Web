@@ -62,7 +62,7 @@ export default function AllProductsAdmin() {
                       </td>
                       <td class="border-t-2 border-gray-800 px-4 py-3">{item.name}</td>
                       <td class="border-t-2 border-gray-800 px-4 py-3">{item.stock}</td>
-                      <td class="border-t-2 border-gray-800 px-4 py-3 text-lg text-white">${item.price}</td>
+                      <td class="border-t-2 border-gray-800 px-4 py-3 text-lg text-white">Rs.{item.price}</td>
                       <td class="border-t-2 border-gray-800 w-10 text-center">
                         <div className="flex flex-row gap-2">
                       <button title="edit" ><i class="fa-solid fa-pen-to-square"></i></button>

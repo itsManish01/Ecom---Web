@@ -55,3 +55,8 @@ export const clearError = ()=> async(dispatch)=>{
         type : CLEAR_ALL_ERRORS
     })
 }
+
+export const createProduct =(product)=>async()=>{
+    const {data} = await axios.post('/api/v1/admin/product/new',product);
+    return data;
+}

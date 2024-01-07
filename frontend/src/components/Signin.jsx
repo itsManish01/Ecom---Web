@@ -31,6 +31,7 @@ export default function Signin() {
     dispatch(login(email, password ));
   };
   const registerHandler = () => {
+    console.log(avatar);
     dispatch(register(name, email, password , avatar));
   };
   const [load,setLoad] = useState(false);
