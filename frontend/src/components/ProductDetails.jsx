@@ -4,6 +4,8 @@ import {
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_SUCCESS,
 } from "../constants/productConstants";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Loading from "./Loading";
@@ -32,7 +34,7 @@ export default function ProductDetails() {
   const { product, loading } = useSelector((store) => store.productDetails);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [preview , setPreview] = useState("");
+
   const { id } = useParams();
   const dispatchAction=useCallback(async()=>{
     dispatch({
@@ -124,14 +126,19 @@ export default function ProductDetails() {
               <div className="lg:w-4/5 mx-auto flex flex-wrap">
                 {/* Carousel to be added */}
                 {product.images ? (
-                  <>
-                    <img
-                      alt="ecommerce"
-                      className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                      src={preview}
-                    />
-
-                  </>
+                    <Carousel className="w-full lg:w-1/2">
+                      {product.images.map((item)=>{
+                        return (
+                          <div>
+                          <img
+                            alt="ecommerce"
+                            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+                            src={item.url}
+                            />
+                            </div>
+                        )
+                      })}
+                    </Carousel>
                 ) : (
                   <Loading />
                 )}
@@ -270,7 +277,7 @@ export default function ProductDetails() {
         <></>
       ) : (
         <section className="text-gray-400 bg-gray-900 body-font">
-          <div className="container px-5 py-8 mx-auto">
+          <div className="container px-5 py-2 mx-auto">
             <h1 className="text-3xl font-medium title-font text-white mb-12 text-center">
               Reviews
             </h1>

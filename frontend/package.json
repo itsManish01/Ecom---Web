@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@coreui/react": "^4.11.1",
     "@material-tailwind/react": "^2.1.8",
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -17,6 +18,7 @@
     "react-modal": "^3.16.1",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.0.4",
+    "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.21.1",
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "5.0.1",
