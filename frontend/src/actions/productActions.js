@@ -1,4 +1,3 @@
-
   import axios from "axios";
   import {CLEAR_ALL_ERRORS,
     ALL_PRODUCT_FAIL,
@@ -58,5 +57,15 @@ export const clearError = ()=> async(dispatch)=>{
 
 export const createProduct =(product)=>async()=>{
     const {data} = await axios.post('/api/v1/admin/product/new',product);
+    return data;
+}
+
+export const deleteProduct = (productID)=> async()=>{
+    const { data }= await axios.delete(`/api/v1/admin/product/${productID}`);
+    return data;
+}
+
+export const updateProduct = (productID,product) => async(dispatch)=>{
+    const { data } = await axios.put(`/api/v1/admin/product/${productID}`, product);
     return data;
 }

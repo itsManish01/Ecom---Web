@@ -126,7 +126,7 @@ export default function ProductDetails() {
               <div className="lg:w-4/5 mx-auto flex flex-wrap">
                 {/* Carousel to be added */}
                 {product.images ? (
-                    <Carousel className="w-full lg:w-1/2">
+                    <Carousel showThumbs={false} className="w-full lg:w-1/2">
                       {product.images.map((item)=>{
                         return (
                           <div>
