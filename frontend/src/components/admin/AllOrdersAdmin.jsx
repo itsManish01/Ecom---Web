@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { AdminAllProducts ,clearError, deleteProduct} from "../../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,39 +6,17 @@ import Loading from "../Loading";
 import { Link } from "react-router-dom";
 import EditProduct from "./EditProduct";
 
-export default function AllProductsAdmin() {
-  const dispatch = useDispatch();
-  const { loading, allProducts, error } = useSelector((store) => store.allProducts);
+export default function ALlOrdersAdmin() {
+  // const dispatch = useDispatch();
 
-  async function deleteHandler(productID){
-
-    try {
-      const data = await deleteProduct(productID);
-      if(data.success){
-        toast.success(data.message, {theme:"dark", position:"bottom-right"});
-      }
-      dispatch(AdminAllProducts());
-    } catch (error) {
-      toast.error("Product Delete Unsuccessful,\n" + error.response.data.message, {theme:"dark", position:"bottom-right"});
-    }
-  }
-
-  useEffect(() => {
-    dispatch(AdminAllProducts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    toast.error(error, { theme: "dark", position: "bottom-right" });
-    dispatch(clearError());
-  }, [error, dispatch]);
-
+  
   return (
     <div>
       <section class="text-gray-400 bg-gray-900 body-font">
         <div class="container px-5 py-10 mx-auto">
           <div class="flex flex-col text-center w-full mb-20">
             <h1 class="sm:text-4xl text-3xl font-medium title-font text-white">
-              All Products -<span className="text-yellow-500"> {allProducts.length} </span>
+              All Orders -<span className="text-yellow-500"> {allProducts.length} </span>
             </h1>
           </div>
           <div class="w-full mx-auto overflow-auto">

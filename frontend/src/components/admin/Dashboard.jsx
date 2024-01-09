@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import CreateProduct from "./CreateProduct.jsx";
 import AllProductsAdmin from "./AllProductsAdmin.jsx"
 import MetaData from "../MetaData.js";
+import Statistics from './Statistics.jsx'
 export default function Dashboard() {
   const [option ,setOption] = useState(0);
   const { user, isAuth } = useSelector((store) => store.user);
@@ -25,51 +26,6 @@ export default function Dashboard() {
             <h1 class="sm:text-3xl text-2xl font-medium title-font text-white">
               Dashboard
             </h1>
-            <div className="flex sm:flex-row justify-center flex-col">
-              <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-                <div class="border-2 border-gray-800 px-4 py-6 rounded-lg">
-                  <i class="fa-solid fa-user text-3xl text-yellow-500"></i>
-                  <h2 class="title-font font-medium text-3xl text-white">4</h2>
-                  <p class="leading-relaxed">Users</p>
-                </div>
-              </div>
-              <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-                <div class="border-2 border-gray-800 px-4 py-6 rounded-lg">
-                  <i class="fa-solid fa-bag-shopping text-3xl text-yellow-500"></i>
-                  <h2 class="title-font font-medium text-3xl text-white">
-                    556
-                  </h2>
-                  <p class="leading-relaxed">Products</p>
-                </div>
-              </div>
-              <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-                <div class="border-2 border-gray-800 px-4 py-6 rounded-lg">
-                  <i class="fa-regular fa-folder-open text-3xl text-yellow-500"></i>
-                  <h2 class="title-font font-medium text-3xl text-white">14</h2>
-                  <p class="leading-relaxed">Orders</p>
-                </div>
-              </div>
-              <div class="p-4 md:w-1/4 sm:w-1/2 w-full">
-                <div class="border-2 border-gray-800 px-4 py-6 rounded-lg">
-                  <i class="fa-solid fa-hand-holding-dollar text-3xl text-yellow-500"></i>
-                  <h2 class="title-font font-medium text-3xl text-white">
-                    1.3K
-                  </h2>
-                  <p class="leading-relaxed">Total Earning</p>
-                </div>
-              </div>
-              <div class="p-4 md:w-1/4 sm:w-1/2 w-full ">
-                <Link to="/admin/statistics">
-                  <div class="border-2 border-gray-800 bg-gray-600 px-4 py-6 rounded-lg">
-                    <i class="fa-solid fa-up-right-from-square text-3xl text-yellow-500"></i>
-                    <h2 class="title-font font-medium text-3xl text-white">
-                      Go to
-                    </h2>
-                    <p class="leading-relaxed">Statistics</p>
-                  </div>
-                </Link>
-              </div>
-            </div>
           </div>
 
           <div className="flex sm:flex-row flex-col w-full justify-around ">
@@ -125,12 +81,23 @@ export default function Dashboard() {
                 </div>
               </div>
             </div>
+            <div className="w-auto sm:flex-row flex-col">
+              <div className="sm:text-xl text-lg font-medium title-font text-white m-3">
+                Statistics
+                <div className="flex sm:flex-row w-full text-sm gap-1">
+                  <button onClick={()=>setOption(9)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===7 ? "bg-yellow-500" : "bg-gray-500"}`}>
+                    <i className="fa-solid fa-check-double"></i> Total Statistics & Earnings
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
 
         <div className="w-full m-4 text-center">
           {option===0 && (<p className="text-3xl py-12">DashBoard</p>)}
           {option===1 && (<AllProductsAdmin />)}
           {option===2 && (<CreateProduct />)}
+          {option===9 && (<Statistics />)}
 
         </div>
 

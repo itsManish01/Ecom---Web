@@ -93,6 +93,11 @@ exports.deleteProduct = catchAsyncErrors(async (req, res) => {
   if (!product) {
     return next(new ErrorHandler("Product not found", 404));
   }
+  //delete the uploaded images from cloudinary
+  console.log(product);
+  for(let i=0;i<product.images.length;i++){
+    await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+  }
 
   await Product.findByIdAndDelete(req.params.id);
   res.status(200).json({

@@ -55,17 +55,17 @@ export const clearError = ()=> async(dispatch)=>{
     })
 }
 
-export const createProduct =(product)=>async()=>{
+export const createProduct =async(product)=>{
     const {data} = await axios.post('/api/v1/admin/product/new',product);
     return data;
 }
 
-export const deleteProduct = (productID)=> async()=>{
+export const deleteProduct = async (productID)=>{
     const { data }= await axios.delete(`/api/v1/admin/product/${productID}`);
     return data;
 }
 
-export const updateProduct = (productID,product) => async(dispatch)=>{
+export const updateProduct = async(productID,product)=>{
     const { data } = await axios.put(`/api/v1/admin/product/${productID}`, product);
     return data;
 }

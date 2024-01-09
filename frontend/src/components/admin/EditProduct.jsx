@@ -34,7 +34,7 @@ export default function EditProduct({ product }) {
         price,
         description,
       }
-      const data = await dispatch(updateProduct(product._id,newProduct));
+      const data = await updateProduct(product._id,newProduct);
       if(data.success){
         setModalState(false);
         toast.success(data.message, {theme:"dark", position:"bottom-right"});

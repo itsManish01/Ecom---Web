@@ -43,7 +43,7 @@ export default function CreateProduct() {
         description : desc,
         images
       }
-      const{data} = createProduct(product);
+      const data = await createProduct(product);
       setProcess(false);
       if(data.success){
         toast.success(data.message, {theme:"dark", position:"bottom-right"});      
