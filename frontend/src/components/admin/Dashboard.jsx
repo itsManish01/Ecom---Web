@@ -5,6 +5,7 @@ import CreateProduct from "./CreateProduct.jsx";
 import AllProductsAdmin from "./AllProductsAdmin.jsx"
 import MetaData from "../MetaData.js";
 import Statistics from './Statistics.jsx'
+import AllOrdersAdmin from "./AllOrdersAdmin.jsx";
 export default function Dashboard() {
   const [option ,setOption] = useState(0);
   const { user, isAuth } = useSelector((store) => store.user);
@@ -62,9 +63,6 @@ export default function Dashboard() {
                   <button onClick={()=>setOption(5)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===5 ? "bg-yellow-500" : "bg-gray-500"}`}>
                     <i className="fa-solid fa-check-double"></i> All Orders
                   </button>
-                  <button onClick={()=>setOption(6)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===6 ? "bg-yellow-500" : "bg-gray-500"}`}>
-                    <i className="fa-solid fa-plus"></i> Order
-                  </button>
                 </div>
               </div>
             </div>
@@ -97,6 +95,7 @@ export default function Dashboard() {
           {option===0 && (<p className="text-3xl py-12">DashBoard</p>)}
           {option===1 && (<AllProductsAdmin />)}
           {option===2 && (<CreateProduct />)}
+          {option===5 && (<AllOrdersAdmin />)}
           {option===9 && (<Statistics />)}
 
         </div>
