@@ -16,7 +16,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "react-js-pagination": "^3.0.3",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-modal": "^3.16.1",
     "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.0.4",

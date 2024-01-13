@@ -5,32 +5,36 @@ import ProductCard from "./ProductCard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useParams } from "react-router-dom";
-import Pagination from "react-js-pagination";
-import "./CSS/pagination.css";
 import MetaData from "./MetaData";
 import { getProduct } from "../actions/productActions";
-import {categories} from "../constants/categories"
+import { categories } from "../constants/categories";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Products() {
   const { loading, products, productsCount } = useSelector(
     (store) => store.products
   );
+  const [productsList, setProductsList] = useState(products.slice(0,8));
+  const [hasMore , setHasMore] = useState(true);
   const [ratingAbove, setRatingAbove] = useState(0);
   const [priceL, setPriceL] = useState(0);
   const [priceR, setPriceR] = useState(500000);
   const [category, setCategory] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
+  const moreProductsHandler = ()=>{
+    const curr_len = productsList.length;
+    if(curr_len < productsCount){
+      setProductsList(products.slice(0,curr_len+8));
+    }else{
+      setHasMore(false);
+    }
+  }
+  var { keyword } = useParams();
 
-  var { keyword } = useParams() ;
- 
-  const setCurrentPageNo = (e) => {
-    setCurrentPage(e);
-  };
   const dispatch = useDispatch();
-  
-  useEffect(()=>{
-    dispatch(getProduct(keyword , currentPage  ,[priceL,priceR], category, ratingAbove))
-  },[dispatch,keyword,currentPage,priceL,priceR,category,ratingAbove])
+
+  useEffect(() => {
+    dispatch(getProduct(keyword, [priceL, priceR], category, ratingAbove));
+  }, [dispatch, keyword, priceL, priceR, category, ratingAbove]);
   return (
     <>
       <MetaData title={"Ecom - Products"} />
@@ -118,38 +122,24 @@ export default function Products() {
       </section>
       <section className="text-gray-400 bg-gray-900 body-font">
         <div className="container px-5  mx-auto">
-          <div className="flex flex-wrap -m-4">
-            {loading ? (
-              <Loading />
-            ) : (
-              <>
+          {loading ? (<Loading/>):
+          (
+
+            <InfiniteScroll 
+            dataLength={productsList.length}
+            loader = {<Loading/>}
+            next = {moreProductsHandler}
+            hasMore={hasMore}
+            className="flex flex-wrap -m-4">
                 {products &&
-                  products.map((item) => {
+                  productsList.map((item) => {
                     return <ProductCard product={item} />;
                   })}
-              </>
-            )}
-          </div>
+          </InfiniteScroll>
+                  )}
         </div>
       </section>
-      {products && (
-        <section className="flex flex-row justify-center py-4">
-          <Pagination
-            activePage={currentPage}
-            itemsCountPerPage={8}
-            totalItemsCount={productsCount}
-            onChange={setCurrentPageNo}
-            nextPageText={"Next"}
-            prevPageText={"Prev"}
-            firstPageText={"First"}
-            lastPageText={"Last"}
-            itemClass="page-item"
-            linkClass="page-link"
-            activeClass="pageItemActive"
-            activeLinkClass="pageLinkActive"
-          ></Pagination>
-        </section>
-      )}
+      
       <ToastContainer />
     </>
   );

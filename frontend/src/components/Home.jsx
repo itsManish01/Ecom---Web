@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   const dispatch = useDispatch();
   const { loading, products ,error } = useSelector((store) => store.products);
+  
   useEffect(
     () => {
       dispatch(getProduct());
@@ -64,8 +65,10 @@ export default function Home() {
               ) : (
                 <>
                   {products &&
-                    products.map((item) => {
-                      return <ProductCard key={item._id} product={item} />;
+                    products.map((item,ind) => {
+                      if(ind < 8){
+                        return <ProductCard key={item._id} product={item} />;
+                      }
                     })}
                 </>
               )}
