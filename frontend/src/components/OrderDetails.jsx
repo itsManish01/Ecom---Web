@@ -1,11 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "./Loading";
-import {
-  ORDER_DETAILS_FAIL,
-  ORDER_DETAILS_REQUEST,
-  ORDER_DETAILS_SUCCESS,
-} from "../constants/orderConstants";
 import { useNavigate, useParams } from "react-router-dom";
 import MetaData from "./MetaData";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,7 +10,7 @@ import { Link } from "react-router-dom";
 export default function OrderDetails() {
   const { id } = useParams();
   const { isAuth } = useSelector((store) => store.user);
-  const { loading, orderDetails } = useSelector((store) => store.order);
+  const [orderDetails , setDetials] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(
@@ -25,25 +20,12 @@ export default function OrderDetails() {
         return;
       }
       try {
-        console.log(id);
-        dispatch({
-          type: ORDER_DETAILS_REQUEST,
-        });
         const { data } = await axios.get(`/api/v1/order/details/${id}`);
-        dispatch({
-          type: ORDER_DETAILS_SUCCESS,
-          payload: data.order,
-        });
-        console.log(data.order);
+        setDetials(data.order);
       } catch (error) {
-        // console.log(error);
         toast.error(error.response.data.message, {
           theme: "dark",
           position: "bottom-right",
-        });
-        dispatch({
-          type: ORDER_DETAILS_FAIL,
-          payload: error.response.data.message,
         });
       }
     },
@@ -52,7 +34,7 @@ export default function OrderDetails() {
   return (
     <div>
       <MetaData title={"Ecom - Order Details"} />
-      {loading ? (
+      {orderDetails===null ? (
         <Loading />
       ) : (
         <div>
