@@ -6,6 +6,7 @@ import AllProductsAdmin from "./AllProductsAdmin.jsx"
 import MetaData from "../MetaData.js";
 import Statistics from './Statistics.jsx'
 import AllOrdersAdmin from "./AllOrdersAdmin.jsx";
+import AllUserAdmin from "./AllUserAdmin.jsx";
 export default function Dashboard() {
   const [option ,setOption] = useState(0);
   const { user, isAuth } = useSelector((store) => store.user);
@@ -95,6 +96,7 @@ export default function Dashboard() {
           {option===0 && (<p className="text-3xl py-12">DashBoard</p>)}
           {option===1 && (<AllProductsAdmin />)}
           {option===2 && (<CreateProduct />)}
+          {option===3 && (<AllUserAdmin />)}
           {option===5 && (<AllOrdersAdmin />)}
           {option===9 && (<Statistics />)}
 

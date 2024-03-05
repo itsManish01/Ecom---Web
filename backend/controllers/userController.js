@@ -190,20 +190,15 @@ exports.getSingleUser= catchAsyncErrors( async(req,res,next)=>{
 
 //update user role -admin
 exports.updateUserRole = catchAsyncErrors( async(req,res,next)=>{
-    const newData = {
-        email : req.body.email,
-        name : req.body.name,
-        role : req.body.role
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return next(new ErrorHandler("User not found !"));
     }
 
-    const user = await User.findByIdAndUpdate(req.params.id,newData,{
-        new : true,
-        runValidators : true,
-    })
-    
+    user.role = req.body.role;
+    await user.save();
     res.status(200).json({
         success : true,
-        user,
         message : "Role Updated Successfully"
     })
 })
