@@ -24,7 +24,6 @@ export default function ALlOrdersAdmin() {
   useEffect(()=>async()=>{
     try {
       const {data} = await allOrdersAdmin(); 
-      console.log(data);
       setOrders(data.orders);
       setTotalAmount(data.totalAmount);
     } catch (error) {
@@ -80,7 +79,7 @@ export default function ALlOrdersAdmin() {
                     <tr key={item._id}> 
                       <td class="border-t-2 border-gray-800 px-4 py-3">{index+1}</td>
                       <td class="border-t-2 border-gray-800 px-4 py-3">
-                      <Link title="Open" to={`/product/${item._id}`}><i class="fa-solid text-yellow-500 mx-2 fa-square-arrow-up-right"></i></Link> 
+                      <Link title="Open" to={`/order/details/${item._id}`}><i class="fa-solid text-yellow-500 mx-2 fa-square-arrow-up-right"></i></Link> 
                         {item._id} 
                       </td>
                       <td class="border-t-2 border-gray-800 px-4 py-3">{item.orderStatus}</td>

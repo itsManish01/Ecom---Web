@@ -9,10 +9,27 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 export default function OrderDetails() {
   const { id } = useParams();
-  const { isAuth } = useSelector((store) => store.user);
+  const { isAuth , user} = useSelector((store) => store.user);
   const [orderDetails , setDetials] = useState(null);
+  const [gen,setGen] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const statusUpdate=async(status_update)=>{
+    try {
+      const {data} = await axios.put(`/api/v1/admin/order/${id}`,{
+        status : status_update
+      });
+      if(data.success){
+        toast.success("Status Updated Successfully!",{theme:"dark",position:"bottom-right"});
+        setGen(!gen);
+      }
+    } catch (error) {
+      toast.error("Error\n"+ error.response.data.message,{theme:"dark",position:"bottom-right"});
+    }
+  }
+
+
   useEffect(
     () => async () => {
       if (!isAuth) {
@@ -29,7 +46,7 @@ export default function OrderDetails() {
         });
       }
     },
-    [isAuth, navigate, dispatch, id]
+    [isAuth, navigate, dispatch, id,gen]
   );
   return (
     <div>
@@ -47,11 +64,21 @@ export default function OrderDetails() {
               </div>
               <h1 class="sm:text-xl text-lg font-medium title-font mb-4 text-white">
                 Order Status :
-                {orderDetails.orderStatus==="Processing" && (<span className="text-blue-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
-                {orderDetails.orderStatus==="Delivered" && (<span className="text-green-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
-                {orderDetails.orderStatus==="Shipped" && (<span className="text-yellow-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
-                {orderDetails.orderStatus==="Cancelled" && (<span className="text-red-500 mx-2 bg-gray-200 pr-2 py-1 rounded-sm"> {orderDetails.orderStatus}</span>) } 
-              </h1>
+                {orderDetails.orderStatus==="Processing" && (<span className="text-blue-500 mx-2 bg-gray-200 px-2 py-2 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Delivered" && (<span className="text-green-500 mx-2 bg-gray-200 px-2 py-2 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Shipped" && (<span className="text-yellow-500 mx-2 bg-gray-200 px-2 py-2 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus==="Cancelled" && (<span className="text-red-500 mx-2 bg-gray-200 px-2 py-2 rounded-sm"> {orderDetails.orderStatus}</span>) } 
+                {orderDetails.orderStatus!=="Delivered" && user.role === "admin" && (
+                  <>
+                  {orderDetails.orderStatus==="Processing" && (
+                    <button onClick={()=>statusUpdate("Shipped")} className="bg-yellow-500 p-1 px-2 rounded-lg hover:bg-green-600" >Change Status to Shipped</button>
+                  )}
+                  {orderDetails.orderStatus==="Shipped" && (
+                    <button onClick={()=>statusUpdate("Delivered")} className="bg-yellow-500 p-1 px-2 rounded-lg hover:bg-green-600" >Change Status to Delivered</button>
+                  )}
+                  </>
+                )}
+                  </h1>
               <h1 class="sm:text-xl text-lg font-medium title-font mb-4 text-white">
                 Ordered Items
               </h1>

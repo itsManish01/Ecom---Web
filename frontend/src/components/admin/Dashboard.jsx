@@ -36,7 +36,7 @@ export default function Dashboard() {
                 Products
                 <div className="flex sm:flex-row w-full text-sm gap-1">
                   <button onClick={()=>setOption(1)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===1 ? "bg-yellow-500" : "bg-gray-500"}`}>
-                    <i className="fa-solid fa-check-double"></i> Product Details
+                    <i className="fa-solid fa-check-double"></i> All Products
                   </button>
                   <button onClick={()=>setOption(2)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===2 ? "bg-yellow-500" : "bg-gray-500"}`}>
                     <i className="fa-solid fa-plus"></i> Create Product
