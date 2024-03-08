@@ -94,7 +94,12 @@ export default function AllUserAdmin() {
                       </td>
                       <td class="border-t-2 border-gray-800 px-4 py-3">{item.name}</td>
                       <td class="border-t-2 border-gray-800 px-4 py-3">{item.email}</td>
-                      <td class="border-t-2 border-gray-800 px-4 py-3 text-lg text-white">{item.role}</td>
+                      {item.role === "admin" && (
+                        <td class="border-t-2 border-gray-800 px-4 py-3 text-lg font-semibold text-green-700">{item.role}</td>
+                      )}
+                      {item.role === "user" && (
+                        <td class="border-t-2 border-gray-800 px-4 py-3 text-lg text-red-700 font-semibold">{item.role}</td>
+                      )}
                       <td class="border-t-2 border-gray-800 px-5 py-3">{item.createdAt.split('T')[0]}</td>
                       <td class="border-t-2 border-gray-800 w-10 text-center">
                         <div className="flex flex-row gap-2">

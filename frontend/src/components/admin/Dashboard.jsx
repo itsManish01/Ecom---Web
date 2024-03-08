@@ -7,6 +7,7 @@ import MetaData from "../MetaData.js";
 import Statistics from './Statistics.jsx'
 import AllOrdersAdmin from "./AllOrdersAdmin.jsx";
 import AllUserAdmin from "./AllUserAdmin.jsx";
+import GetReview from "./GetReview.jsx";
 export default function Dashboard() {
   const [option ,setOption] = useState(0);
   const { user, isAuth } = useSelector((store) => store.user);
@@ -51,9 +52,6 @@ export default function Dashboard() {
                   <button onClick={()=>setOption(3)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===3 ? "bg-yellow-500" : "bg-gray-500"}`}>
                     <i className="fa-solid fa-check-double"></i> All Users
                   </button>
-                  <button onClick={()=>setOption(4)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===4 ? "bg-yellow-500" : "bg-gray-500"}`}>
-                    <i className="fa-solid fa-plus"></i> user
-                  </button>
                 </div>
               </div>
             </div>
@@ -72,10 +70,7 @@ export default function Dashboard() {
                 Reviews
                 <div className="flex sm:flex-row w-full text-sm gap-1">
                   <button onClick={()=>setOption(7)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===7 ? "bg-yellow-500" : "bg-gray-500"}`}>
-                    <i className="fa-solid fa-check-double"></i>All reviews
-                  </button>
-                  <button onClick={()=>setOption(8)} className={`hover:bg-yellow-500 p-1 rounded-md ${option===8 ? "bg-yellow-500" : "bg-gray-500"}`}>
-                    <i className="fa-solid fa-plus"></i> Review
+                    <i className="fa-solid fa-check-double"></i> Get Reviews
                   </button>
                 </div>
               </div>
@@ -99,7 +94,7 @@ export default function Dashboard() {
           {option===3 && (<AllUserAdmin />)}
           {option===5 && (<AllOrdersAdmin />)}
           {option===9 && (<Statistics />)}
-
+          {option===7 && (<GetReview/>)}
         </div>
 
 

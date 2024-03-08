@@ -82,7 +82,18 @@ export default function ALlOrdersAdmin() {
                       <Link title="Open" to={`/order/details/${item._id}`}><i class="fa-solid text-yellow-500 mx-2 fa-square-arrow-up-right"></i></Link> 
                         {item._id} 
                       </td>
-                      <td class="border-t-2 border-gray-800 px-4 py-3">{item.orderStatus}</td>
+                      {item.orderStatus==="Processing" && (
+                        <td class="border-t-2 border-gray-800 px-4 font-semibold text-yellow-500 py-3">{item.orderStatus}</td>
+                      )}
+                      {item.orderStatus==="Delivered" && (
+                        <td class="border-t-2 border-gray-800 px-4 font-semibold text-green-500 py-3">{item.orderStatus}</td>
+                      )}
+                      {item.orderStatus==="Shipped" && (
+                        <td class="border-t-2 border-gray-800 px-4 font-semibold text-orange-500 py-3">{item.orderStatus}</td>
+                      )}
+                      {item.orderStatus==="Cancelled" && (
+                        <td class="border-t-2 border-gray-800 px-4 font-semibold text-red-500 py-3">{item.orderStatus}</td>
+                      )}
                       <td class="border-t-2 border-gray-800 px-4 py-3">Rs. {item.totalPrice}</td>
                       <td class="border-t-2 border-gray-800 px-4 py-3 text-lg">{item.user}</td>
                       <td class="border-t-2 border-gray-800 px-5 py-3">{item.createdAt.split('T')[0]}</td>

@@ -190,3 +190,15 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     message: "Review deleted Successfully",
   });
 });
+
+exports.getReview = catchAsyncErrors(async(req,res,next)=>{
+  console.log(req.params.id)
+  const product = await Product.findById(req.params.id);
+  if(!product){
+    return next(new ErrorHandler("Invalid Product ID"));
+  }
+  res.status(200).json({
+    success : true,
+    reviews : product.reviews
+  })
+})
