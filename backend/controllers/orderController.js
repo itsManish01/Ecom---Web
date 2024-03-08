@@ -119,3 +119,17 @@ exports.deleteOrder= catchAsyncErrors( async(req,res,next)=>{
         message :"Order Deleted Successfully",
     })
 })
+
+exports.getStats = catchAsyncErrors( async(req,res,next)=>{
+    const orders = await Order.find();
+    let data = [];
+    let sum = 0;
+    for(let i = 0; i<orders.length ; ++i){
+        sum += orders[i].totalPrice;
+        data.push({totalEarning : sum, date : orders[i].createdAt});
+    }
+    res.status(200).json({
+        success : true,
+        data
+    });
+})

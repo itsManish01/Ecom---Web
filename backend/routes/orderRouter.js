@@ -8,6 +8,7 @@ const {
   getAllOrders,
   updateOrder,
   deleteOrder,
+  getStats,
 } = require("../controllers/orderController");
 
 router.route("/order/new").post(isAuthenticated, createOrder);
@@ -20,5 +21,6 @@ router
   .route("/admin/order/:id")
   .put(isAuthenticated, authorizeRoles("admin"), updateOrder)
   .delete(isAuthenticated, authorizeRoles("admin"), deleteOrder);
-
-module.exports = router;
+router
+.route("/admin/orders/stats").get(isAuthenticated,authorizeRoles("admin"),getStats);
+module.exports = router;  
