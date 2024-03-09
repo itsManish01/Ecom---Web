@@ -35,10 +35,10 @@ export default function Header() {
           <Link className="mr-5 hover:text-white" to="/products">
             Products
           </Link>
-          <Link className="mr-5 hover:text-white" to="/#">
+          <Link className="mr-5 hover:text-white" to="/contact">
             Contact
           </Link>
-          <Link className="mr-5 hover:text-white" to="/#">
+          <Link className="mr-5 hover:text-white" to="/about">
             About
           </Link>
         </nav>

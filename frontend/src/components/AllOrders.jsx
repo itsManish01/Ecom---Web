@@ -34,7 +34,7 @@ export default function AllOrders() {
       </h1>
 
       <div>
-        {orders==null ? (
+        {orders===null ? (
           <Loading />
         ) : ( 
           <>

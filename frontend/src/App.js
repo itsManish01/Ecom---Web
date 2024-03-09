@@ -16,11 +16,12 @@ import ForgotPassword from "./components/ForgotPassword.jsx";
 import Cart from "./components/Cart.jsx"
 import Shipping from "./components/Shipping.jsx"
 import OrderSummary from "./components/OrderSummary.jsx"
-// import OrderPlaced from "./components/OrderPlaced.jsx"
 import AllOrders from "./components/AllOrders.jsx"
 import OrderDetails from "./components/OrderDetails.jsx";
 import Dashboard from "./components/admin/Dashboard.jsx";
 import Payment from "./components/Payment.jsx";
+import AboutUs from "./components/AboutUs.jsx";
+import ContactUs from "./components/ContactUs.jsx";
 function App() {
 
   const dispatch = useDispatch();
@@ -47,6 +48,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="/products/:keyword" element={<Products />} />
           <Route path="/search" element={<Search />} />
           <Route path="/signin" element={<Signin/>}  />
