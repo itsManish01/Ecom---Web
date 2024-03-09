@@ -15,12 +15,12 @@ import Profile from "./components/Profile.jsx"
 import ForgotPassword from "./components/ForgotPassword.jsx";
 import Cart from "./components/Cart.jsx"
 import Shipping from "./components/Shipping.jsx"
-import Payment from "./components/Payment.jsx";
 import OrderSummary from "./components/OrderSummary.jsx"
-import OrderPlaced from "./components/OrderPlaced.jsx"
+// import OrderPlaced from "./components/OrderPlaced.jsx"
 import AllOrders from "./components/AllOrders.jsx"
 import OrderDetails from "./components/OrderDetails.jsx";
 import Dashboard from "./components/admin/Dashboard.jsx";
+import Payment from "./components/Payment.jsx";
 function App() {
 
   const dispatch = useDispatch();
@@ -55,8 +55,7 @@ function App() {
           <Route path="/password/reset/:token" element={<ForgotPassword/>}/>
           <Route path="/order/shipping" element={<Shipping />} />
           <Route path="/order/summary" element={<OrderSummary />} />
-          <Route path="/order/payment" element={<Payment/>} />
-          <Route path="/order/success" element={<OrderPlaced/>} />
+          <Route path="/order/paymentsuccess/:id" element={<Payment/>} />
           <Route path="/order/me" element={<AllOrders/>} />
           <Route path="/order/details/:id" element={<OrderDetails/>} />
           <Route path="/admin" element={<Dashboard/>} />

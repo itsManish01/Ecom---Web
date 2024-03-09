@@ -10,7 +10,6 @@ process.on("uncaughtException", (err) => {
 
 });
 
-
 // config
 dotenv.config({
     path : "backend/configs/config.env",

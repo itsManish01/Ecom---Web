@@ -10,6 +10,7 @@ const {
   deleteOrder,
   getStats,
 } = require("../controllers/orderController");
+const { checkout, paymentVerification } = require("../controllers/paymentController");
 
 router.route("/order/new").post(isAuthenticated, createOrder);
 router.route("/order/details/:id").get(isAuthenticated, getSingleOrder);
@@ -23,4 +24,8 @@ router
   .delete(isAuthenticated, authorizeRoles("admin"), deleteOrder);
 router
 .route("/admin/orders/stats").get(isAuthenticated,authorizeRoles("admin"),getStats);
+router
+  .route("/checkout").post(checkout);
+router
+  .route("/paymentverification").post(paymentVerification);
 module.exports = router;  
